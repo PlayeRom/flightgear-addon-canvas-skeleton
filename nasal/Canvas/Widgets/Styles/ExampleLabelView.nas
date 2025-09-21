@@ -57,7 +57,6 @@ DefaultStyle.widgets["fancy-label-view"] = {
         var width = me._text.getSize()[0];
         var height = me._text.getSize()[1];
 
-        # model.setLayoutMaximumSize([MAX_SIZE, y]);
         model.setLayoutMinimumSize([width, height]);
         model.setLayoutSizeHint([width, height]);
     },
