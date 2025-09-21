@@ -15,7 +15,7 @@
                 <name>skeleton-say-hello</name>
                 <binding>
                     <command>nasal</command>
-                    <script>gui.popupTip("Hello, I am a sample addon.");</script>
+                    <script>canvasSkeleton.Message.success("Hello, I am a sample addon.");</script>
                 </binding>
             </item>
             <item>
