@@ -46,6 +46,12 @@ var AboutDialog = {
 
         me._vbox.addStretch(1);
 
+        me._vbox.addItem(me._getButton("Open GitHub Website", func {
+            Utils.openBrowser({ "url": g_Addon.codeRepositoryUrl });
+        }));
+
+        me._vbox.addStretch(1);
+
         var buttonBoxClose = me._drawBottomBar("Close", func { me._window.hide(); });
         me._vbox.addSpacing(10);
         me._vbox.addItem(buttonBoxClose);
@@ -75,6 +81,18 @@ var AboutDialog = {
         label.setTextAlign("center");
 
         return label;
+    },
+
+    #
+    # @param  string  text  Label of button.
+    # @param  func  callback  Function which will be executed after click the button.
+    # @return ghost  Button widget.
+    #
+    _getButton: func(text, callback) {
+        return canvas.gui.widgets.Button.new(me._group, canvas.style, {})
+            .setText(text)
+            .setFixedSize(200, 26)
+            .listen("clicked", callback);
     },
 
     #

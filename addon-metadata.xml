@@ -58,7 +58,7 @@
             <home-page type="string">https://example.com/FlightGear-Skeleton-addon/</home-page>
             <download type="string">https://example.com/FlightGear-Skeleton-addon/download</download>
             <support type="string">https://example.com/FlightGear-Skeleton-addon/support</support>
-            <code-repository type="string">https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Addons/Skeleton/</code-repository>
+            <code-repository type="string">https://github.com/PlayeRom/flightgear-addon-canvas-skeleton</code-repository>
         </urls>
 
         <tags>
