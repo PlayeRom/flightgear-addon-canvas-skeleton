@@ -11,7 +11,7 @@ This add-on includes many files you might find unnecessary. For example, the ent
 
 ## Reload add-on and `.env` file
 
-One significant change is the removal of a hard-coded menu item for reloading the add-on. After spending many hours developing add-ons for FlightGear, I realized I needed a solution that wouldn't interfere with the repository and wouldn't require me to constantly remember not to commit the `addon-menubar-items.xml` file with an uncommented reload menu item.
+One significant change is not using a hard-coded menu item to reload the add-on. After spending many hours developing add-ons for FlightGear, I realized I needed a solution that wouldn't interfere with the repository and wouldn't require me to constantly remember not to commit the `addon-menubar-items.xml` file with an uncommented reload menu item.
 
 To solve this, I implemented a mechanism inspired by other frameworks: an `.env` file for local configuration that isn't added to the repository (the `.env` file is listed in `.gitignore`). If you create an `.env` file (copy `.env.example` as a starting point), you can set the variable `DEV_MODE=true`. This will automatically and programmatically add a **Dev Reload** menu item, allowing you to reload the add-on's Nasal files without restarting the simulator.
 
