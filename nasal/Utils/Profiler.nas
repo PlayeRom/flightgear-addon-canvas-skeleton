@@ -1,0 +1,58 @@
+#
+# This is an Open Source project and it is licensed
+# under the GNU Public License v3 (GPLv3)
+#
+
+#
+# Profiler class for measuring code execution time.
+#
+var Profiler = {
+    #
+    # Call stack.
+    #
+    _stack: std.Vector.new(),
+
+    #
+    # Start profiler.
+    #
+    # @param  string  message  Extra context message.
+    # @return void
+    #
+    start: func(message = nil) {
+        Profiler._stack.append({
+            message: message == nil ? "" : "Context: " ~ message,
+            startTime: systime(),
+        });
+    },
+
+    #
+    # Stop profiler and log result.
+    #
+    # @return double  Measurement time in seconds.
+    #
+    stop: func() {
+        var count = Profiler._stack.size();
+
+        if (count == 0) {
+            Log.print("profiler time = ? seconds. FIRST RUN start() METHOD.");
+        }
+
+        var item = Profiler._stack.vector[count - 1];
+
+        var time = systime() - item.startTime;
+
+        Log.print("profiler time = ", time, " seconds. ", item.message);
+
+        # Remove item from stack
+        Profiler._stack.remove(item);
+
+        return time;
+    },
+
+    #
+    # Clear all call stack.
+    #
+    clear: func() {
+        Profiler._stack.clear();
+    },
+};

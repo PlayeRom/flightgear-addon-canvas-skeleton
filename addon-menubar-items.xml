@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+    <meta>
+        <file-type type="string">FlightGear add-on menu bar items</file-type>
+        <format-version type="int">1</format-version>
+    </meta>
+    <menubar-items>
+        <menu>
+            <label>CanvasSkeleton</label>
+            <enabled type="bool">true</enabled>
+
+            <item>
+                <label>Say hello</label>
+                <name>skeleton-say-hello</name>
+                <binding>
+                    <command>nasal</command>
+                    <script>gui.popupTip("Hello, I am a sample addon.");</script>
+                </binding>
+            </item>
+            <item>
+                <label>My addon dialog</label>
+                <name>skeleton-about-dialog</name>
+                <binding>
+                    <command>nasal</command>
+                    <script>canvasSkeleton.g_AboutDialog.show();</script>
+                </binding>
+            </item>
+
+            <!--
+            FOR DEVELOPMENT ONLY!
+            trigger reload of addon-main.nas
+            1) This item should be REMOVED for release versions.
+            2) Ensure the label is unique
+            3) replace addon ID  to match your addon
+            -->
+            <!-- <item>
+                <label>Reload Skeleton</label>
+                <binding>
+                    <command>addon-reload</command>
+                    <id>org.flightgear.addons.CanvasSkeleton</id>
+                </binding>
+            </item> -->
+
+        </menu>
+    </menubar-items>
+</PropertyList>
