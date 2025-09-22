@@ -7,14 +7,18 @@
 # Class for handle .env file.
 # This is for development purposes only.
 #
-var DevEnv = {
+var Env = {
     #
     # Constructor.
     #
+    # @param  ghost  addon  The addons.Addon object.
     # @return hash
     #
-    new: func() {
-        var me = { parents: [DevEnv] };
+    new: func(addon) {
+        var me = {parents: [
+            Env,
+            DevBase.new(addon),
+        ]};
 
         me._variables = {};
         me._readEnvFile();
@@ -52,7 +56,7 @@ var DevEnv = {
     # @return bool  True if success.
     #
     _readEnvFile: func() {
-        var envFilePath = g_Addon.basePath ~ "/.env";
+        var envFilePath = me._addon.basePath ~ "/.env";
         if (!io.exists(envFilePath)) {
             return false;
         }
@@ -69,7 +73,7 @@ var DevEnv = {
                 key = string.trim(pair[0]);
                 value = string.trim(pair[1]);
 
-                Log.alert("read .env file: ", key, "=", value);
+                me._printLog("read .env file: ", key, "=", value);
 
                 me._variables[key] = me._convertValue(value);
             }

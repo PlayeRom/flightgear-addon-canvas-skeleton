@@ -15,9 +15,9 @@ One significant change is not using a hard-coded menu item to reload the add-on.
 
 To solve this, I implemented a mechanism inspired by other frameworks: an `.env` file for local configuration that isn't added to the repository (the `.env` file is listed in `.gitignore`). If you create an `.env` file (copy `.env.example` as a starting point), you can set the variable `DEV_MODE=true`. This will automatically and programmatically add a **Dev Reload** menu item, allowing you to reload the add-on's Nasal files without restarting the simulator.
 
-The files `nasal/Utils/DevEnv.nas` and `nasal/Utils/DevReload.nas` handle this functionality, so you'll need to keep them if you want to use this mechanism.
+The files `nasal/Utils/Dev/DevEnv.nas` and `nasal/Utils/Dev/DevReload.nas` handle this functionality, so you'll need to keep them if you want to use this mechanism.
 
-You MUST also update the value of `DevReload.MAIN_MENU_LABEL` to match the name of your main menu label.
+You MUST also update the value of `MAIN_MENU_LABEL` in `DevReload.nas` file to match the name of your main menu label.
 
 ## Canvas Dialog
 
@@ -68,6 +68,7 @@ Directory structure for Nasal files:
 - `/` - you can place other Nasal files in the main project directory if you need to, but they cannot be widget files.
 - `/nasal` - place your add-on logic Nasal files here (not related to Canvas).
 - `/nasal/Utils` - supporting Nasal files such as wrappers, facades, etc.
+- `/nasal/Utils/Dev` - Nasal support files, for development purposes only.
 - `/nasal/Canvas` - Nasal files related to drawing in Canvas.
 - `/nasal/Canvas/Widgets` - Nasal widget files for Canvas (models).
 - `/nasal/Canvas/Widgets/Styles` - Nasal widget files for Canvas (views).

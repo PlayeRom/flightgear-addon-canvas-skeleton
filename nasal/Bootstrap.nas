@@ -32,7 +32,7 @@ var Bootstrap = {
     init: func(addon) {
         g_Addon = addon;
 
-        Bootstrap._initDevMode();
+        Bootstrap._initDevMode(addon);
 
         # Disable the menu as it loads with delay.
         gui.menuEnable("skeleton-about-dialog", false);
@@ -71,11 +71,12 @@ var Bootstrap = {
     #
     # Handle development mode (.env file).
     #
+    # @param  ghost  addon  The addons.Addon object.
     # @return void
     #
-    _initDevMode: func() {
-        var reloadMenu = DevReload.new();
-        var env = DevEnv.new();
+    _initDevMode: func(addon) {
+        var reloadMenu = dev.ReloadMenu.new(addon);
+        var env = dev.Env.new(addon);
 
         env.getValue("DEV_MODE")
             ? reloadMenu.addMenu()
