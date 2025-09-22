@@ -19,6 +19,8 @@
 #   https://sourceforge.net/p/flightgear/fgdata/ci/next/tree/Docs/README.add-ons
 #
 
+io.include("Loader.nas");
+
 #
 # Main add-on function.
 #
@@ -52,5 +54,3 @@ var unload = func(addon) {
     canvasSkeleton.Log.print("unload");
     canvasSkeleton.Bootstrap.uninit();
 };
-
-io.include("Loader.nas");
