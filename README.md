@@ -82,9 +82,18 @@ A widget is divided into two files: one for the **model** and one for the **view
 
 The view is hidden behind the model, so your application should not interact with the view directly. In this add-on, the model is implemented in the `ExampleLabel` class, and the view in the `ExampleLabelView` class.
 
+## Namespaces
+
+When loading additional Nasal files, you must provide a unique namespace for your add-on. Ideally, as the name of the add-on. Uniqueness is important, as otherwise your files may conflict with others loaded into the same namespace by another add-on, leading to a crash.
+
+The namespace is specified in the `addon-main.nas` file as `canvasSkeleton` (case-sensitive). Change it to a different name throughout the project.
+
+Widgets are loaded into the `canvas` namespace. This is the namespace used by FlightGear. It's important that your widget names don't conflict with other names used in this namespace, including those loaded from other add-ons. Therefore, if you're migrating a widget from another add-on or FlightGear to your project, rename it in the code to a unique name (both the view and the model).
+
 ## You can also see add-ons written based on this skeleton
 
-A great way to get familiar with writing add-ins in Canvas is through live, working examples:
+A great way to get familiar with writing add-ins in Canvas is to explore working add-ins based on this framework:
 
 1. [Which Runway](https://github.com/PlayeRom/flightgear-addon-which-runway)
 2. [Logbook](https://github.com/PlayeRom/flightgear-addon-logbook)
+3. [Aerotow Everywhere](https://github.com/PlayeRom/flightgear-addon-aerotow-everywhere) - although it doesn't use Canvas (yet), it is also based on this framework.
