@@ -30,6 +30,7 @@ io.include("Loader.nas");
 var main = func(addon) {
     logprint(LOG_ALERT, addon.name, " Add-on initialized from path ", addon.basePath);
 
+    # TODO: change the namespace from `canvasSkeleton` to your own unique namespace throughout the project.
     Loader.new(addon).load(addon.basePath, "canvasSkeleton");
 
     canvasSkeleton.Bootstrap.init(addon);

@@ -50,9 +50,9 @@ If aircraft implementations improve, or if FlightGear introduces a proper soluti
 
 ## Structure of the add-on
 
-The first and most important Nasal file loaded by FlightGear is `addon-main.nas`. In this skeleton, its sole responsibility is to load the other Nasal files into their appropriate namespaces. By default, files are loaded into the `canvasSkeleton` namespace (you should change this to your own). Files related to custom Canvas widgets are loaded into the `canvas` namespace and should not be changed.
+The first and most important Nasal file loaded by FlightGear is `addon-main.nas`. In this skeleton, its sole responsibility is to load the other Nasal files into their appropriate namespaces. By default, files are loaded into the `canvasSkeleton` namespace (you MUST change this to your own). Files related to custom Canvas widgets are loaded into the `canvas` namespace and should not be changed.
 
-If you add new `.nas` files to the project, you don't need to modify anything - `addon-main.nas` will automatically detect and load them when the add-on restarts. However, keep in mind:
+If you add new `.nas` files to the project, you don't need to modify anything - `Loader.nas` will automatically detect and load them when the add-on restarts. However, keep in mind:
 
 - Widget files must be placed in the `Widgets` directory; all files there are automatically loaded into the `canvas` namespace.
 - Other Nasal files can be placed in the add-on's root directory or in the `nasal` subdirectory.
