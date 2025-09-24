@@ -18,6 +18,9 @@ var AboutDialog = {
             Dialog.new(width: 300, height: 400, title: "About Canvas Skeleton", resize: true),
         ] };
 
+        # Let the parent know who their child is.
+        me.setChild(me, AboutDialog);
+
         me.setPositionOnCenter();
 
         me._vbox.addSpacing(10);
@@ -47,7 +50,7 @@ var AboutDialog = {
         me._vbox.addStretch(1);
 
         me._vbox.addItem(me._getButton("Open GitHub Website", func {
-            Utils.openBrowser({ "url": g_Addon.codeRepositoryUrl });
+            Utils.openBrowser({ url: g_Addon.codeRepositoryUrl });
         }));
 
         me._vbox.addStretch(1);
@@ -64,9 +67,34 @@ var AboutDialog = {
     # Destructor.
     #
     # @return void
+    # @override Dialog
     #
     del: func() {
         call(Dialog.del, [], me);
+    },
+
+    #
+    # Show the dialog.
+    #
+    # @return void
+    # @override Dialog
+    #
+    show: func() {
+        # TODO: add mode stuff here on show the window...
+
+        call(Dialog.show, [], me);
+    },
+
+    #
+    # Hide the dialog.
+    #
+    # @return void
+    # @override Dialog
+    #
+    hide: func() {
+        # TODO: add mode stuff here on hide the window, like stop timer, etc...
+
+        call(Dialog.hide, [], me);
     },
 
     #
