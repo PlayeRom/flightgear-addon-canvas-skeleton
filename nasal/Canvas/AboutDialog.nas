@@ -34,7 +34,7 @@ var AboutDialog = {
             me._vbox.addItem(me._getLabel(author.name));
         }
 
-        var fancyLabel = canvas.gui.widgets.ExampleLabel.new(me._group, canvas.style, {})
+        var exampleLabel = canvas.gui.widgets.ExampleLabel.new(me._group, canvas.style, {})
             .setText("Some text for this dialog");
 
         me._vbox.addStretch(1);
@@ -42,7 +42,7 @@ var AboutDialog = {
         # Center widget horizontally
         var hBox = canvas.HBoxLayout.new();
         hBox.addStretch(1);
-        hBox.addItem(fancyLabel);
+        hBox.addItem(exampleLabel);
         hBox.addStretch(1);
 
         me._vbox.addItem(hBox);
@@ -55,7 +55,7 @@ var AboutDialog = {
 
         me._vbox.addStretch(1);
 
-        var buttonBoxClose = me._drawBottomBar("Close", func { me._window.hide(); });
+        var buttonBoxClose = me._drawBottomBar("Close", func { me.hide(); });
         me._vbox.addSpacing(10);
         me._vbox.addItem(buttonBoxClose);
         me._vbox.addSpacing(10);
@@ -103,7 +103,7 @@ var AboutDialog = {
     # @return ghost  Label widget.
     #
     _getLabel: func(text, wordWrap = false) {
-        var label = canvas.gui.widgets.Label.new(me._group, canvas.style, {wordWrap: wordWrap})
+        var label = canvas.gui.widgets.Label.new(me._group, canvas.style, { wordWrap: wordWrap })
             .setText(text);
 
         label.setTextAlign("center");

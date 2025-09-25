@@ -114,7 +114,8 @@ var Dialog = {
             # bar and here we want hide the window only.
             # FG version 2024.x supports the destroy_on_close flag, which could
             # be set to false, then FG would call hide() on the window itself,
-            # but this will not give us the ability to call the child function.
+            # but this will not give us the ability to call the child's hide()
+            # function.
 
             self._callMethodByChild("hide");
         };

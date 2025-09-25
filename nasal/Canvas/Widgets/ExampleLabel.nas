@@ -7,8 +7,6 @@
 # ExampleLabel widget Model.
 #
 gui.widgets.ExampleLabel = {
-    _CLASS: "ExampleLabel",
-
     #
     # Constructor.
     #
