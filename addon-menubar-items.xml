@@ -19,9 +19,19 @@
                 </binding>
             </item>
             <item>
-                <label>My addon dialog...</label>
-                <name>skeleton-about-dialog</name>
+                <label>Transient About Dialog...</label>
+                <name>skeleton-about-transient-dialog</name>
                 <binding>
+                    <!-- In this case, to call an action from the menu, we create the entire window now. -->
+                    <command>nasal</command>
+                    <script>canvasSkeleton.AboutTransientDialog.new();</script>
+                </binding>
+            </item>
+            <item>
+                <label>Persistent About Dialog...</label>
+                <name>skeleton-about-persistent-dialog</name>
+                <binding>
+                    <!-- We have already created a window instance, so we are just showing it here. -->
                     <command>nasal</command>
                     <script>canvasSkeleton.g_AboutDialog.show();</script>
                 </binding>

@@ -4,22 +4,29 @@
 #
 
 #
-# AboutDialog class to display about info.
+# AboutPersistentDialog class to display about info.
 #
-var AboutDialog = {
+var AboutPersistentDialog = {
     #
     # Constructor.
     #
     # @return hash
     #
     new: func() {
-        var me = { parents: [
-            AboutDialog,
-            Dialog.new(width: 300, height: 400, title: "About Canvas Skeleton", resize: true),
-        ] };
+        var me = {
+            parents: [
+                AboutPersistentDialog,
+                PersistentDialog.new(
+                    width: 300,
+                    height: 400,
+                    title: "About Canvas Skeleton",
+                    resize: true,
+                ),
+            ],
+        };
 
         var dialogParent = me.parents[1];
-        dialogParent.setChild(me, AboutDialog); # Let the parent know who their child is.
+        dialogParent.setChild(me, AboutPersistentDialog); # Let the parent know who their child is.
         dialogParent.setPositionOnCenter();
 
         me._vbox.addSpacing(10);
@@ -66,34 +73,36 @@ var AboutDialog = {
     # Destructor.
     #
     # @return void
-    # @override Dialog
+    # @override PersistentDialog
     #
     del: func() {
-        call(Dialog.del, [], me);
+        # TODO: add more stuff here on delete the window if needed...
+
+        me.parents[1].del();
     },
 
     #
     # Show the dialog.
     #
     # @return void
-    # @override Dialog
+    # @override PersistentDialog
     #
     show: func() {
-        # TODO: add mode stuff here on show the window...
+        # TODO: add more stuff here on show the window if needed...
 
-        call(Dialog.show, [], me);
+        me.parents[1].show();
     },
 
     #
     # Hide the dialog.
     #
     # @return void
-    # @override Dialog
+    # @override PersistentDialog
     #
     hide: func() {
-        # TODO: add mode stuff here on hide the window, like stop timer, etc...
+        # TODO: add more stuff here on hide the window if needed, like stop timer, etc...
 
-        call(Dialog.hide, [], me);
+        me.parents[1].hide();
     },
 
     #

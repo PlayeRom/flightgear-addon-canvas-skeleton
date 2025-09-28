@@ -44,7 +44,7 @@ var Bootstrap = {
         Bootstrap._initDevMode();
 
         # Disable the menu as it loads with delay.
-        gui.menuEnable("skeleton-about-dialog", false);
+        gui.menuEnable("skeleton-about-persistent-dialog", false);
 
         # Delay loading of the whole addon so as not to break the MCDUs for aircraft like A320, A330. The point is that,
         # for example, the A320 hard-coded the texture index from /canvas/by-index/texture[15]. But add-on can creates
@@ -53,12 +53,12 @@ var Bootstrap = {
         # then the textures of this add-on.
 
         Timer.singleShot(3, func() {
-            g_AboutDialog = AboutDialog.new();
+            g_AboutDialog = AboutPersistentDialog.new();
 
-            # TODO: create objects here...
+            # TODO: create persistence canvas dialog here...
 
             # Enable the menu as the entire Canvas should now be loaded.
-            gui.menuEnable("skeleton-about-dialog", true);
+            gui.menuEnable("skeleton-about-persistent-dialog", true);
         });
     },
 
