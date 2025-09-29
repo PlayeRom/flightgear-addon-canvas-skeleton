@@ -6,7 +6,7 @@
 #
 # ExampleLabelView widget View.
 #
-DefaultStyle.widgets["fancy-label-view"] = {
+DefaultStyle.widgets["example-label-view"] = {
     #
     # Constructor.
     #
@@ -16,7 +16,7 @@ DefaultStyle.widgets["fancy-label-view"] = {
     #
     new: func(parent, cfg) {
         # The main canvas group must be called `_root`.
-        me._root = parent.createChild("group", "fancy-label-view");
+        me._root = parent.createChild("group", "example-label-view");
 
         me._text = me._root.createChild("text")
             .setColor([1, 0, 0])
@@ -28,7 +28,7 @@ DefaultStyle.widgets["fancy-label-view"] = {
     #
     # Callback called when user resized the window.
     #
-    # @param  ghost  model  ExampleLabelView model.
+    # @param  ghost  model  ExampleLabel model.
     # @param  int  w, h  Width and height of widget.
     # @return ghost
     #
@@ -39,7 +39,7 @@ DefaultStyle.widgets["fancy-label-view"] = {
     },
 
     #
-    # @param  ghost  model  ExampleLabelView model.
+    # @param  ghost  model  ExampleLabel model.
     # @return void
     #
     update: func(model) {
@@ -47,7 +47,7 @@ DefaultStyle.widgets["fancy-label-view"] = {
     },
 
     #
-    # @param  ghost  model  ExampleLabelView model.
+    # @param  ghost  model  ExampleLabel model.
     # @return void
     #
     reDrawContent: func(model) {

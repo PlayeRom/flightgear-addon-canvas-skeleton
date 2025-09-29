@@ -11,8 +11,8 @@ gui.widgets.ExampleLabel = {
     # Constructor.
     #
     # @param  ghost  parent
-    # @param  hash  style
-    # @param  hash  cfg
+    # @param  hash|nil  style
+    # @param  hash|nil  cfg
     # @return ghost
     #
     new: func(parent, style = nil, cfg = nil) {
@@ -20,7 +20,7 @@ gui.widgets.ExampleLabel = {
         cfg = Config.new(cfg);
         var me = gui.Widget.new(gui.widgets.ExampleLabel, cfg);
         me._focus_policy = me.NoFocus;
-        me._setView(style.createWidget(parent, "fancy-label-view", me._cfg));
+        me._setView(style.createWidget(parent, "example-label-view", me._cfg));
 
         me._text = "Dummy text";
 

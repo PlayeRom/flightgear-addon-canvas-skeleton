@@ -75,6 +75,8 @@ var AboutDialog = {
         };
 
         # Crate your stuff here ...
+        # Dialog already has a canvas.VBoxLayout prepared for adding more elements to the dialog:
+        # me._vbox.addItem(...);
 
         return me;
     },
@@ -123,6 +125,8 @@ var AboutDialog = {
         dialogParent.setPositionOnCenter();
 
         # Crate your stuff here ...
+        # Dialog already has a canvas.VBoxLayout prepared for adding more elements to the dialog:
+        # me._vbox.addItem(...);
 
         return me;
     },

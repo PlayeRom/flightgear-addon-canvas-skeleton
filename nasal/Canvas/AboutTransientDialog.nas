@@ -19,8 +19,7 @@ var AboutTransientDialog = {
                 TransientDialog.new(
                     width: 300,
                     height: 400,
-                    title:
-                    "About Canvas Skeleton",
+                    title: "About Canvas Skeleton",
                     resize: true,
                 ),
             ],
