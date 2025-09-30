@@ -230,3 +230,7 @@ A great way to get familiar with writing add-ins in Canvas is to explore working
 1. [Which Runway](https://github.com/PlayeRom/flightgear-addon-which-runway)
 2. [Logbook](https://github.com/PlayeRom/flightgear-addon-logbook)
 3. [Aerotow Everywhere](https://github.com/PlayeRom/flightgear-addon-aerotow-everywhere) - although it doesn't use Canvas (yet), it is also based on this framework.
+
+## Class Diagram
+
+![alt Class Diagram](docs/class-diagram.png "Class Diagram")
