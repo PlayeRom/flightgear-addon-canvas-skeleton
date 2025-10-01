@@ -5,7 +5,7 @@ First, read [README.add-ons](https://gitlab.com/flightgear/fgdata/-/blob/next/Do
 
 This is a Canvas Skeleton add-on. Use it as a simple starting point for your own FlightGear add-on. The difference from [Skeleton](https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Addons/Skeleton/) is that this add-on is based on a GUI built with Canvas. So if you need a Canvas-based GUI, this is the place to start.
 
-This skeleton favors object-oriented programming (one class per file, with each class having a single responsibility), but you can also write procedural code and put 5K lines in one file - if that's what you're comfortable with :) Methods and class members intended to be private or protected start with an underscore `_`. Nasal doesn't enforce this like C++, but it helps clarify the code's intent.
+This skeleton favors object-oriented programming (one class per file, with each class having a single responsibility), but you can also write procedural code and put 5K lines in one file – if that's what you're comfortable with :) Methods and class members intended to be private or protected start with an underscore `_`. Nasal doesn't enforce this like C++, but it helps clarify the code's intent.
 
 This add-on includes many files you might find unnecessary. For example, the entire `nasal/Utils` directory contains helper classes you don't have to use. These are mostly wrappers for FlightGear functions that make them easier to work with, but you can safely do without them.
 
@@ -13,11 +13,11 @@ This add-on includes many files you might find unnecessary. For example, the ent
 
 One significant change is not using a hard-coded menu item to reload the add-on. After spending many hours developing add-ons for FlightGear, I realized I needed a solution that wouldn't interfere with the repository and wouldn't require me to constantly remember not to commit the `addon-menubar-items.xml` file with an uncommented reload menu item.
 
-To solve this, I implemented a mechanism inspired by other frameworks: an `.env` file for local configuration that isn't added to the repository (the `.env` file is listed in `.gitignore`). If you create an `.env` file (copy `.env.example` as a starting point), you can set the variable `DEV_MODE=true`. This will automatically and programmatically add a **Dev Reload** menu item, allowing you to reload the add-on's Nasal files without restarting the simulator.
+To solve this, I implemented a mechanism inspired by other frameworks – an `.env` file for local configuration that isn't added to the repository (the `.env` file is listed in `.gitignore`). If you create an `.env` file (copy `.env.example` as a starting point), you can set the variable `DEV_MODE=true` and `ADD_RELOAD_MENU=true`. This will automatically and programmatically add a **Dev Reload** menu item, allowing you to reload the add-on's Nasal files without restarting the simulator. Or then you can use `:Yacs` multi-key (or set another combination) to restart add-on Nasal files.
 
-The files `nasal/Utils/Dev/DevEnv.nas` and `nasal/Utils/Dev/DevReloadMenu.nas` handle this functionality, so you'll need to keep them if you want to use this mechanism.
+The files in the `nasal/Utils/Dev` folder handle this functionality, so you'll need to keep them if you want to use this mechanism.
 
-You MUST also update the value of `MAIN_MENU_LABEL` in `DevReloadMenu.nas` file to match the name of your main menu label.
+You MUST also update the value of `MAIN_MENU_LABEL` in `nasal/Utils/Dev/DevReloadMenu.nas` file to match the name of your main menu label.
 
 ## Canvas Dialog
 
@@ -185,7 +185,7 @@ Of course, for simpler cases, you can also solve this differently, for example, 
 
 The first and most important Nasal file loaded by FlightGear is `addon-main.nas`. In this skeleton, its sole responsibility is to load the other Nasal files into their appropriate namespaces. By default, files are loaded into the `canvasSkeleton` namespace (you MUST change this to your own). Files related to custom Canvas widgets are loaded into the `canvas` namespace and should not be changed.
 
-If you add new `.nas` files to the project, you don't need to modify anything - `Loader.nas` will automatically detect and load them when the add-on restarts. However, keep in mind:
+If you add new `.nas` files to the project, you don't need to modify anything – `Loader.nas` will automatically detect and load them when the add-on restarts. However, keep in mind:
 
 - Widget files must be placed in the `Widgets` directory; all files there are automatically loaded into the `canvas` namespace.
 - Other Nasal files can be placed in the add-on's root directory or in the `nasal` subdirectory.
@@ -198,13 +198,13 @@ The `Bootstrap` file should prepare any required directories and initialize your
 
 Directory structure for Nasal files:
 
-- `/` - you can place other Nasal files in the main project directory if you need to, but they cannot be widget files.
-- `/nasal` - place your add-on logic Nasal files here (not related to Canvas).
-- `/nasal/Utils` - supporting Nasal files such as wrappers, facades, etc.
-- `/nasal/Utils/Dev` - Nasal support files, for development purposes only.
-- `/nasal/Canvas` - Nasal files related to drawing in Canvas.
-- `/nasal/Canvas/Widgets` - Nasal widget files for Canvas (models).
-- `/nasal/Canvas/Widgets/Styles` - Nasal widget files for Canvas (views).
+- `/` – you can place other Nasal files in the main project directory if you need to, but they cannot be widget files.
+- `/nasal` – place your add-on logic Nasal files here (not related to Canvas).
+- `/nasal/Utils` – supporting Nasal files such as wrappers, facades, etc.
+- `/nasal/Utils/Dev` – Nasal support files, for development purposes only.
+- `/nasal/Canvas` – Nasal files related to drawing in Canvas.
+- `/nasal/Canvas/Widgets` – Nasal widget files for Canvas (models).
+- `/nasal/Canvas/Widgets/Styles` – Nasal widget files for Canvas (views).
 
 ## A little bit about widgets
 
@@ -229,7 +229,7 @@ A great way to get familiar with writing add-ins in Canvas is to explore working
 
 1. [Which Runway](https://github.com/PlayeRom/flightgear-addon-which-runway)
 2. [Logbook](https://github.com/PlayeRom/flightgear-addon-logbook)
-3. [Aerotow Everywhere](https://github.com/PlayeRom/flightgear-addon-aerotow-everywhere) - although it doesn't use Canvas (yet), it is also based on this framework.
+3. [Aerotow Everywhere](https://github.com/PlayeRom/flightgear-addon-aerotow-everywhere) – although it doesn't use Canvas (yet), it is also based on this framework.
 
 ## Class Diagram
 
