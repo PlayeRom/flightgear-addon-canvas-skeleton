@@ -74,6 +74,8 @@ var AboutDialog = {
             ],
         };
 
+        me._parentDialog = me.parents[1];
+
         # Crate your stuff here ...
         # Dialog already has a canvas.VBoxLayout prepared for adding more elements to the dialog:
         # me._vbox.addItem(...);
@@ -90,7 +92,7 @@ var AboutDialog = {
     del: func() {
         # Destroy your stuff here if needed...
 
-        me.parents[1].del();
+        me._parentDialog.del();
     },
 };
 ```
@@ -116,13 +118,13 @@ var AboutDialog = {
             ],
         };
 
-        var dialogParent = me.parents[1];
+        me._parentDialog = me.parents[1];
 
         # Let the parent know who their child is.
-        dialogParent.setChild(me, AboutDialog);
+        me._parentDialog.setChild(me, AboutDialog);
 
         # Enable correct handling of window positioning in the center of the screen
-        dialogParent.setPositionOnCenter();
+        me._parentDialog.setPositionOnCenter();
 
         # Crate your stuff here ...
         # Dialog already has a canvas.VBoxLayout prepared for adding more elements to the dialog:
@@ -140,7 +142,7 @@ var AboutDialog = {
     del: func() {
         # Destroy your stuff here...
 
-        me.parents[1].del();
+        me._parentDialog.del();
     },
 
     #
@@ -152,7 +154,7 @@ var AboutDialog = {
     show: func() {
         # Add more stuff here on show the window if needed...
 
-        me.parents[1].show();
+        me._parentDialog.show();
     },
 
     #
@@ -164,7 +166,7 @@ var AboutDialog = {
     hide: func() {
         # Add more stuff here on hide the window if needed, like stop timer, etc...
 
-        me.parents[1].hide();
+        me._parentDialog.hide();
     },
 };
 ```

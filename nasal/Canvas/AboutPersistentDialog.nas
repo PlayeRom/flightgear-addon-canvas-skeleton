@@ -25,9 +25,9 @@ var AboutPersistentDialog = {
             ],
         };
 
-        var dialogParent = me.parents[1];
-        dialogParent.setChild(me, AboutPersistentDialog); # Let the parent know who their child is.
-        dialogParent.setPositionOnCenter();
+        me._parentDialog = me.parents[1];
+        me._parentDialog.setChild(me, AboutPersistentDialog); # Let the parent know who their child is.
+        me._parentDialog.setPositionOnCenter();
 
         me._vbox.addSpacing(10);
 
@@ -78,7 +78,7 @@ var AboutPersistentDialog = {
     del: func() {
         # TODO: add more stuff here on delete the window if needed...
 
-        me.parents[1].del();
+        me._parentDialog.del();
     },
 
     #
@@ -90,7 +90,7 @@ var AboutPersistentDialog = {
     show: func() {
         # TODO: add more stuff here on show the window if needed...
 
-        me.parents[1].show();
+        me._parentDialog.show();
     },
 
     #
@@ -102,7 +102,7 @@ var AboutPersistentDialog = {
     hide: func() {
         # TODO: add more stuff here on hide the window if needed, like stop timer, etc...
 
-        me.parents[1].hide();
+        me._parentDialog.hide();
     },
 
     #

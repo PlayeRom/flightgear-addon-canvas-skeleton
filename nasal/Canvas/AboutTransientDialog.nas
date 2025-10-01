@@ -25,6 +25,8 @@ var AboutTransientDialog = {
             ],
         };
 
+        me._parentDialog = me.parents[1];
+
         me._vbox.addSpacing(10);
 
         me._vbox.addItem(me._getLabel(g_Addon.name));
@@ -74,7 +76,7 @@ var AboutTransientDialog = {
     del: func() {
         # TODO: add more stuff here on delete the window if needed...
 
-        me.parents[1].del();
+        me._parentDialog.del();
     },
 
     #
