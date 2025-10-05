@@ -36,6 +36,7 @@ var main = func(addon) {
     canvasSkeleton.Bootstrap.init(addon);
 };
 
+#
 # This function is for addon development only. It is called on addon
 # reload. The addons system will replace setlistener() and maketimer() to
 # track this resources automatically for you.
