@@ -29,11 +29,14 @@ var GitLabVersionChecker = {
     },
 
     #
+    # Get URL to latest release of the project.
+    #
     # @return string
     #
     _getUrl: func() {
         var (user, repo) = me.getUserAndRepoNames();
-        return "https://gitlab.com/api/v4/projects/" ~ user ~ "%2F" ~ repo ~ "/releases";
+        var project = Utils.urlEncode(user ~ "/" ~ repo);
+        return "https://gitlab.com/api/v4/projects/" ~ project ~ "/releases/permalink/latest";
     },
 
     #
@@ -42,23 +45,17 @@ var GitLabVersionChecker = {
     #
     _downloadCallback: func(downloadedResource) {
         var json = me.parseJson(downloadedResource);
-        if (json == nil) {
+        if (json == nil or !globals.ishash(json)) {
             return;
         }
 
-        # GitLab returns arrays of objects with releases, where the first object is the latest release.
-        # Each object contains a `tag_name` field.
-        if (!globals.isvec(json) or !globals.size(json)) {
-            return;
-        }
-
-        var item = json[0];
-        if (!globals.ishash(item) or !globals.contains(item, "tag_name")) {
+        # GitHub returns a single object with the latest release, where we find the `tag_name` field.
+        if (!globals.contains(json, "tag_name")) {
             Log.print("GitLabVersionChecker failed, the JSON doesn't contain `tag_name` key.");
             return;
         }
 
-        var strLatestVersion = item["tag_name"];
+        var strLatestVersion = json["tag_name"];
         if (strLatestVersion == nil) {
             return;
         }

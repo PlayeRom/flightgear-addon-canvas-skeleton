@@ -29,6 +29,8 @@ var GitHubVersionChecker = {
     },
 
     #
+    # Get URL to latest release of the project.
+    #
     # @return string
     #
     _getUrl: func() {
