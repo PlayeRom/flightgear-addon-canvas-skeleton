@@ -29,42 +29,9 @@ var AboutPersistentDialog = {
         me._parentDialog.setChild(me, AboutPersistentDialog); # Let the parent know who their child is.
         me._parentDialog.setPositionOnCenter();
 
-        me._vbox.addSpacing(10);
+        me._createLayout();
 
-        me._vbox.addItem(me._getLabel(g_Addon.name));
-        me._vbox.addItem(me._getLabel(sprintf("version %s", g_Addon.version.str())));
-        me._vbox.addStretch(1);
-        me._vbox.addItem(me._getLabel("Written by:"));
-
-        foreach (var author; g_Addon.authors) {
-            me._vbox.addItem(me._getLabel(author.name));
-        }
-
-        var exampleLabel = canvas.gui.widgets.ExampleLabel.new(me._group)
-            .setText("Some text for this dialog");
-
-        me._vbox.addStretch(1);
-
-        # Center widget horizontally
-        var hBox = canvas.HBoxLayout.new();
-        hBox.addStretch(1);
-        hBox.addItem(exampleLabel);
-        hBox.addStretch(1);
-
-        me._vbox.addItem(hBox);
-
-        me._vbox.addStretch(1);
-
-        me._vbox.addItem(me._getButton("Open GitHub Website", func {
-            Utils.openBrowser({ url: g_Addon.codeRepositoryUrl });
-        }));
-
-        me._vbox.addStretch(1);
-
-        var buttonBoxClose = me._drawBottomBar("Close", func { me.hide(); });
-        me._vbox.addSpacing(10);
-        me._vbox.addItem(buttonBoxClose);
-        me._vbox.addSpacing(10);
+        g_VersionChecker.registerCallback(Callback.new(me.newVersionAvailable, me));
 
         return me;
     },
@@ -103,6 +70,71 @@ var AboutPersistentDialog = {
         # TODO: add more stuff here on hide the window if needed, like stop timer, etc...
 
         me._parentDialog.hide();
+    },
+
+    #
+    # Create layout.
+    #
+    # @return void
+    #
+    _createLayout: func {
+        me._vbox.addSpacing(10);
+
+        me._vbox.addItem(me._getLabel(g_Addon.name));
+        me._vbox.addItem(me._getLabel(sprintf("version %s", g_Addon.version.str())));
+        me._vbox.addStretch(1);
+        me._vbox.addItem(me._getLabel("Written by:"));
+
+        foreach (var author; g_Addon.authors) {
+            me._vbox.addItem(me._getLabel(author.name));
+        }
+
+        var exampleLabel = canvas.gui.widgets.ExampleLabel.new(me._group)
+            .setText("Some text for this dialog");
+
+        me._vbox.addStretch(1);
+
+        # Center widget horizontally
+        var hBox = canvas.HBoxLayout.new();
+        hBox.addStretch(1);
+        hBox.addItem(exampleLabel);
+        hBox.addStretch(1);
+
+        me._vbox.addItem(hBox);
+
+        me._vbox.addStretch(1);
+
+        me._vbox.addItem(me._getButton("Open GitHub Website", func {
+            Utils.openBrowser({ url: g_Addon.codeRepositoryUrl });
+        }));
+
+        me._vbox.addStretch(1);
+
+        me._createLayoutNewVersionInfo();
+
+        me._vbox.addStretch(1);
+
+        var buttonBoxClose = me._drawBottomBar("Close", func { me.hide(); });
+        me._vbox.addSpacing(10);
+        me._vbox.addItem(buttonBoxClose);
+        me._vbox.addSpacing(10);
+    },
+
+    #
+    # Create hidden layout for new version info.
+    #
+    # @return void
+    #
+    _createLayoutNewVersionInfo: func {
+        me._newVersionAvailLabel = me._getLabel("New version is available").setVisible(false);
+        me._newVersionAvailLabel.setColor([0.9, 0.0, 0.0]);
+
+        me._newVersionAvailBtn = me._getButton("Download new version", func {
+            Utils.openBrowser({ url: g_Addon.downloadUrl });
+        }).setVisible(false);
+
+        me._vbox.addItem(me._newVersionAvailLabel);
+        me._vbox.addItem(me._newVersionAvailBtn);
     },
 
     #
@@ -149,5 +181,20 @@ var AboutPersistentDialog = {
         buttonBox.addStretch(1);
 
         return buttonBox;
+    },
+
+    #
+    # Callback called when a new version of add-on is detected.
+    #
+    # @param  string  newVersion
+    # @return void
+    #
+    newVersionAvailable: func(newVersion) {
+        me._newVersionAvailLabel
+            .setText(sprintf("New version %s is available", newVersion))
+            .setVisible(true);
+
+        me._newVersionAvailBtn
+            .setVisible(true);
     },
 };

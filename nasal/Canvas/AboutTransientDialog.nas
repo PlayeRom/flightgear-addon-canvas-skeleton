@@ -27,6 +27,29 @@ var AboutTransientDialog = {
 
         me._parentDialog = me.parents[1];
 
+        me._createLayout();
+
+        return me;
+    },
+
+    #
+    # Destructor.
+    #
+    # @return void
+    # @override TransientDialog
+    #
+    del: func() {
+        # TODO: add more stuff here on delete the window if needed...
+
+        me._parentDialog.del();
+    },
+
+    #
+    # Create layout.
+    #
+    # @return void
+    #
+    _createLayout: func {
         me._vbox.addSpacing(10);
 
         me._vbox.addItem(me._getLabel(g_Addon.name));
@@ -59,24 +82,37 @@ var AboutTransientDialog = {
 
         me._vbox.addStretch(1);
 
-        var buttonBoxClose = me._drawBottomBar("Close", func { me.del(); });
+        me._createLayoutNewVersionInfo();
+
+        me._vbox.addStretch(1);
+
+        var buttonBoxClose = me._drawBottomBar("Close", func { me.hide(); });
         me._vbox.addSpacing(10);
         me._vbox.addItem(buttonBoxClose);
         me._vbox.addSpacing(10);
-
-        return me;
     },
 
     #
-    # Destructor.
+    # Create layout for new version info.
     #
     # @return void
-    # @override TransientDialog
     #
-    del: func() {
-        # TODO: add more stuff here on delete the window if needed...
+    _createLayoutNewVersionInfo: func {
+        var label = g_VersionChecker.isNewVersion()
+            ? sprintf("New version %s is available", g_VersionChecker.getNewVersion())
+            : "New version is not available";
 
-        me._parentDialog.del();
+        var newVersionAvailLabel = me._getLabel(label)
+            .setVisible(g_VersionChecker.isNewVersion());
+
+        newVersionAvailLabel.setColor([0.9, 0.0, 0.0]);
+
+        var newVersionAvailBtn = me._getButton("Download new version", func {
+            Utils.openBrowser({ url: g_Addon.downloadUrl });
+        }).setVisible(g_VersionChecker.isNewVersion());
+
+        me._vbox.addItem(newVersionAvailLabel);
+        me._vbox.addItem(newVersionAvailBtn);
     },
 
     #

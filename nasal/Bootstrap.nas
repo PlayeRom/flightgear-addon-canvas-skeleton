@@ -24,6 +24,11 @@ var g_isDevMode = false;
 var g_Addon = nil;
 
 #
+# Global object of VersionChecker.
+#
+var g_VersionChecker = nil;
+
+#
 # Global object of about dialog.
 #
 var g_AboutDialog = nil;
@@ -43,6 +48,8 @@ var Bootstrap = {
 
         Bootstrap._initDevMode();
 
+        g_VersionChecker = MetaDataVersionChecker.new();
+
         # Disable the menu as it loads with delay.
         gui.menuEnable("skeleton-about-persistent-dialog", false);
 
@@ -57,6 +64,10 @@ var Bootstrap = {
 
             # TODO: create persistence canvas dialog here...
 
+            # Check the version last, because dialogs must first register their
+            # callbacks to VersionChecker in their constructors.
+            g_VersionChecker.checkLastVersion();
+
             # Enable the menu as the entire Canvas should now be loaded.
             gui.menuEnable("skeleton-about-persistent-dialog", true);
         });
@@ -69,6 +80,10 @@ var Bootstrap = {
     #
     uninit: func() {
         Profiler.clear();
+
+        if (g_VersionChecker != nil) {
+            g_VersionChecker.del();
+        }
 
         if (g_AboutDialog != nil) {
             g_AboutDialog.del();
