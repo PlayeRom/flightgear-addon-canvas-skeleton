@@ -74,7 +74,7 @@ var DevEnv = {
 
         var content = io.readfile(envFilePath.realpath);
 
-        var lines = globals.split("\n", content);
+        var lines = split("\n", content);
 
         foreach (var line; lines) {
             line = me._cutComment(line);
@@ -101,12 +101,12 @@ var DevEnv = {
     #
     _cutComment: func(line) {
         line = string.trim(line);
-        var pos = globals.find("#", line);
+        var pos = find("#", line);
         if (pos == -1) {
             return line;
         }
 
-        return globals.substr(line, 0, pos);
+        return substr(line, 0, pos);
     },
 
     #
@@ -121,7 +121,7 @@ var DevEnv = {
 
            if (valueUc == "TRUE") return true;
         elsif (valueUc == "FALSE") return false;
-        elsif (globals.isnum(valueUc)) return globals.num(valueUc);
+        elsif (isnum(valueUc)) return num(valueUc);
         elsif (valueUc == "LOG_ALERT") return LOG_ALERT;
         elsif (valueUc == "LOG_WARN") return LOG_WARN;
         elsif (valueUc == "LOG_INFO") return LOG_INFO;
@@ -143,7 +143,7 @@ var DevEnv = {
             and value[0] == `"`
             and value[-1] == `"`
         ) {
-            return globals.substr(value, 1, size(value) - 2);
+            return substr(value, 1, size(value) - 2);
         }
 
         return value;

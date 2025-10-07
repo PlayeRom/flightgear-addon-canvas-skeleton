@@ -51,7 +51,7 @@ var Listeners = {
     # @return int  Listener handler.
     #
     add: func(node, code, init = false, type = 1) {
-        var handler = globals.setlistener(node, code, init, type);
+        var handler = setlistener(node, code, init, type);
         me._listeners.append(handler);
 
         return handler;
@@ -73,7 +73,7 @@ var Listeners = {
     #
     clear: func() {
         foreach (var listener; me._listeners.vector) {
-            globals.removelistener(listener);
+            removelistener(listener);
         }
 
         me._listeners.clear();

@@ -78,7 +78,7 @@ var DevReloadMultiKey = {
     #
     _removeColon: func(command) {
         if (command[0] == `:`) {
-            return globals.substr(command, 1);
+            return substr(command, 1);
         }
 
         return command;

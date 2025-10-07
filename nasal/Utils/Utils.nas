@@ -39,12 +39,12 @@ var Utils = {
     urlEncode: func(str) {
         var result = "";
         var allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
-        var size = globals.size(str);
+        var size = size(str);
 
         for (var i = 0; i < size; i += 1) {
             var char = str[i];
 
-            if (globals.find(chr(char), allowed) == -1) {
+            if (find(chr(char), allowed) == -1) {
                 result ~= "%" ~ sprintf("%02X", char);
             } else {
                 result ~= chr(char);

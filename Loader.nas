@@ -44,7 +44,7 @@ var Loader = {
     # @return void
     #
     load: func(path, namespace, level = 0, relPath = "") {
-        var entries = globals.directory(path);
+        var entries = directory(path);
 
         foreach (var entry; entries) {
             if (entry == "." or entry == "..") {
