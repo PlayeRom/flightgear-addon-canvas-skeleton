@@ -38,6 +38,13 @@ var MetaDataVersionChecker = {
         var (user, repo) = me.getUserAndRepoNames();
         var branch = "main";
         return "https://raw.githubusercontent.com/" ~ user ~ "/" ~ repo ~ "/" ~ branch ~ "/addon-metadata.xml";
+
+        # URL for GitLab:
+        # return "https://gitlab.com/" ~ user ~ "/" ~ repo ~ "/-/raw/" ~ branch ~ "/addon-metadata.xml";
+
+        # URL for Source Forge:
+        # var dir = "YourProjectDir";
+        # return "https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Addons/" ~ dir ~ "/addon-metadata.xml?format=raw";
     },
 
     #

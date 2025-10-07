@@ -110,14 +110,21 @@ var VersionChecker = {
     # @return vector  User and repository names or empty strings when failed.
     #
     getUserAndRepoNames: func(repositoryUrl = nil) {
+        # remove "/" on the end if exists
         var repoUrl = string.trim(repositoryUrl or g_Addon.codeRepositoryUrl, 1, func(c) c == `/`);
+
+        # remove "https://" on the front
+        if (string.imatch(repoUrl, "https://*")) {
+            repoUrl = substr(repoUrl, 8, size(repoUrl) - 8);
+        }
+
         var parts = globals.split("/", repoUrl);
         if (size(parts) < 3) {
             return ["", ""];
         }
 
-        var user = parts[-2];
-        var repo = parts[-1];
+        var user = parts[1]; # 0 is a domain, so 1 is a user name
+        var repo = string.join("/", parts[1:]); # Repo can have subdirectories
 
         return [user, repo];
     },
