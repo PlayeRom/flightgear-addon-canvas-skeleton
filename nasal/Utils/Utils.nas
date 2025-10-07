@@ -39,9 +39,9 @@ var Utils = {
     urlEncode: func(str) {
         var result = "";
         var allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
-        var size = size(str);
+        var count = size(str);
 
-        for (var i = 0; i < size; i += 1) {
+        for (var i = 0; i < count; i += 1) {
             var char = str[i];
 
             if (find(chr(char), allowed) == -1) {
