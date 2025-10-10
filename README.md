@@ -185,16 +185,16 @@ Of course, for simpler cases, you can also solve this differently, for example, 
 
 ## Structure of the add-on
 
-The first and most important Nasal file loaded by FlightGear is `addon-main.nas`. In this skeleton, its sole responsibility is to load the other Nasal files into their appropriate namespaces. By default, files are loaded into the `canvasSkeleton` namespace (you MUST change this to your own). Files related to custom Canvas widgets are loaded into the `canvas` namespace and should not be changed.
+The first and most important Nasal file loaded by FlightGear is `addon-main.nas`. In this skeleton, its sole responsibility is to load the other Nasal files into their appropriate namespaces. By default, files are loaded into the default add-on namespace created by FlightGear for each addon: `__addon[your-addon-id]__`. However, files related to custom Canvas widgets are loaded into the `canvas` namespace.
 
 If you add new `.nas` files to the project, you don't need to modify anything – `Loader.nas` will automatically detect and load them when the add-on restarts. However, keep in mind:
 
-- Widget files must be placed in the `Widgets` directory; all files there are automatically loaded into the `canvas` namespace.
 - Other Nasal files can be placed in the add-on's root directory or in the `nasal` subdirectory.
 - Any additional subdirectories for Nasal must be located inside `nasal` directory.
 - All Nasal files must use the `.nas` extension, otherwise they won't be recognized.
+- Widget files must be placed in the `Widgets` directory inside somewhere `nasal` directory; all files there are automatically loaded into the `canvas` namespace.
 
-After loading, the `Bootstrap.init()` method is executed. From `Bootstrap.nas` onward, you can work directly in your namespace (e.g., `canvasSkeleton`), so you don't need to prefix every class reference.
+After loading all Nasal files, the `Bootstrap.init()` method is executed.
 
 The `Bootstrap` file should prepare any required directories and initialize your classes. In this skeleton, only the `AboutPersistentDialog` class is created here. You can add more Persistent dialogs the same way. Note that the `AboutPersistentDialog` instance is created inside a timer that delays Canvas window creation by 3 seconds, for the reasons explained earlier.
 
@@ -219,11 +219,42 @@ The view is hidden behind the model, so your application should not interact wit
 
 ## Namespaces
 
-When loading additional Nasal files, you must provide a unique namespace for your add-on. Ideally, as the name of the add-on. Uniqueness is important, as otherwise your files may conflict with others loaded into the same namespace by another add-on, leading to a crash.
+As you can see in the `addon-main.nas` file, the namespace into which the add-on's additional Nasal files will be loaded is set as `var namespace = addons.getNamespaceName(addon);`. So it will be a namespace in the format `__addon[your-addon-id]__`, where `your-addon-id` is the ID of your add-on specified in the `addon-metadata.xml` file. To access this namespace, you need to refer to it as follows: `globals[‘__addon[your-addon-id]__’]`, which you can see in the `addon-menubar-items.xml` file. This is an inconvenient and long name to use, so if you want, you can create a global alias for it, e.g.:
 
-The namespace is specified in the `addon-main.nas` file as `canvasSkeleton` (case-sensitive). Change it to a different name throughout the project.
+```nasal
+var namespace = addons.getNamespaceName(addon);
 
-Widgets are loaded into the `canvas` namespace. This is the namespace used by FlightGear. It's important that your widget names don't conflict with other names used in this namespace, including those loaded from other add-ons. Therefore, if you're migrating a widget from another add-on or FlightGear to your project, rename it in the code to a unique name (both the view and the model).
+# Create an alias to the add-on namespace for easier reference in addon-menubar-items.xml:
+globals.canvasSkeletonAddon = globals[namespace];
+```
+
+Here, of course, change the name `canvasSkeletonAddon` to something that reflects your addon and is unique to the entire FlightGear project. Now, in the `addon-menubar-items.xml` file, you can refer to the addon variables like this: `canvasSkeletonAddon.g_AboutDialog.show();`, which greatly simplifies the code.
+
+Another solution would be to load all additional Nasal files into your namespace, e.g., `canvasSkeletonAddon`, by replacing the line:
+
+```nasal
+var namespace = addons.getNamespaceName(addon);
+```
+
+with:
+
+```nasal
+var namespace = 'canvasSkeletonAddon';
+```
+
+However, in this case, to access variables or classes loaded from other files, such as `Bootstrap`, you must precede each call with your namespace, which can be another inconvenience, e.g.:
+
+```nasal
+canvasSkeletonAddon.Bootstrap.init(addon);
+```
+
+In this case, your addon will use two namespaces: `__addon[org.flightgear.addons.CanvasSkeleton]__` and `canvasSkeletonAddon`. The files `addon-main.nas` and `Loader.nas` will be loaded into the first namespace. The rest of the Nasal files that are not Canvas widgets will be loaded into the second namespace.
+
+As you can see, there are many solutions you can use. By default, the framework loads Nasal files into `__addon[your-addon-id]__`, which means it does not create additional namespaces, keeping everything in one place.
+
+However, Canvas widgets are (and must be) loaded into the `canvas` namespace. This is the namespace used by FlightGear. It's important that your widget names don't conflict with other names used in this namespace, including those loaded from other add-ons. Therefore, if you're migrating a widget from another add-on or FlightGear to your project, rename it in the code to a unique name (both the view and the model).
+
+![alt Namespaces](docs/namespaces.png "Namespaces")
 
 ## You can also see add-ons written based on this skeleton
 
