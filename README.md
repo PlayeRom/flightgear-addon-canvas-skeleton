@@ -62,7 +62,7 @@ var AboutDialog = {
     #
     # @return hash
     #
-    new: func() {
+    new: func {
         var me = {
             parents: [
                 AboutDialog,
@@ -73,8 +73,6 @@ var AboutDialog = {
                 ),
             ],
         };
-
-        me._parentDialog = me.parents[1];
 
         # Crate your stuff here ...
         # Dialog already has a canvas.VBoxLayout prepared for adding more elements to the dialog:
@@ -89,10 +87,10 @@ var AboutDialog = {
     # @return void
     # @override TransientDialog
     #
-    del: func() {
+    del: func {
         # Destroy your stuff here if needed...
 
-        me._parentDialog.del();
+        call(TransientDialog.del, [], me);
     },
 };
 ```
@@ -106,7 +104,7 @@ var AboutDialog = {
     #
     # @return hash
     #
-    new: func() {
+    new: func {
         var me = {
             parents: [
                 AboutDialog,
@@ -121,7 +119,7 @@ var AboutDialog = {
         me._parentDialog = me.parents[1];
 
         # Let the parent know who their child is.
-        me._parentDialog.setChild(me, AboutDialog);
+        me._parentDialog.setChild(me);
 
         # Enable correct handling of window positioning in the center of the screen
         me._parentDialog.setPositionOnCenter();
@@ -139,10 +137,10 @@ var AboutDialog = {
     # @return void
     # @override PersistentDialog
     #
-    del: func() {
+    del: func {
         # Destroy your stuff here...
 
-        me._parentDialog.del();
+        call(PersistentDialog.del, [], me);
     },
 
     #
@@ -151,10 +149,10 @@ var AboutDialog = {
     # @return void
     # @override PersistentDialog
     #
-    show: func() {
+    show: func {
         # Add more stuff here on show the window if needed...
 
-        me._parentDialog.show();
+        call(PersistentDialog.show, [], me);
     },
 
     #
@@ -163,10 +161,10 @@ var AboutDialog = {
     # @return void
     # @override PersistentDialog
     #
-    hide: func() {
+    hide: func {
         # Add more stuff here on hide the window if needed, like stop timer, etc...
 
-        me._parentDialog.hide();
+        call(PersistentDialog.hide, [], me);
     },
 };
 ```
