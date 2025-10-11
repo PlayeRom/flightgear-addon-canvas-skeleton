@@ -119,7 +119,7 @@ var AboutDialog = {
         me._parentDialog = me.parents[1];
 
         # Let the parent know who their child is.
-        me._parentDialog.setChild(me);
+        me._parentDialog.setChild(me, AboutDialog);
 
         # Enable correct handling of window positioning in the center of the screen
         me._parentDialog.setPositionOnCenter();
