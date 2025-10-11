@@ -25,8 +25,6 @@ var AboutTransientDialog = {
             ],
         };
 
-        me._parentDialog = me.parents[1];
-
         me._createLayout();
 
         return me;
@@ -41,7 +39,7 @@ var AboutTransientDialog = {
     del: func() {
         # TODO: add more stuff here on delete the window if needed...
 
-        me._parentDialog.del();
+        call(TransientDialog.del, [], me);
     },
 
     #
