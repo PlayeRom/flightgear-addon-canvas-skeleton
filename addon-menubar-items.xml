@@ -15,7 +15,9 @@
                 <name>skeleton-say-hello</name>
                 <binding>
                     <command>nasal</command>
-                    <script>globals['__addon[org.flightgear.addons.CanvasSkeleton]__'].Message.success("Hello, I am a sample addon.");</script>
+                    <script><![CDATA[
+                        globals['__addon[org.flightgear.addons.CanvasSkeleton]__'].Message.success("Hello, I am a sample addon.");
+                    ]]></script>
                 </binding>
             </item>
             <item>
@@ -24,7 +26,9 @@
                 <binding>
                     <!-- In this case, to call an action from the menu, we create the entire window now. -->
                     <command>nasal</command>
-                    <script>globals['__addon[org.flightgear.addons.CanvasSkeleton]__'].AboutTransientDialog.new();</script>
+                    <script><![CDATA[
+                        globals['__addon[org.flightgear.addons.CanvasSkeleton]__'].AboutTransientDialog.new();
+                    ]]></script>
                 </binding>
             </item>
             <item>
@@ -33,7 +37,9 @@
                 <binding>
                     <!-- We have already created a window instance, so we are just showing it here. -->
                     <command>nasal</command>
-                    <script>globals['__addon[org.flightgear.addons.CanvasSkeleton]__'].g_AboutDialog.show();</script>
+                    <script><![CDATA[
+                        globals['__addon[org.flightgear.addons.CanvasSkeleton]__'].g_AboutDialog.show();
+                    ]]></script>
                 </binding>
             </item>
 
