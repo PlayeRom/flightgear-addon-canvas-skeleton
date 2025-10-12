@@ -13,7 +13,7 @@ var AboutPersistentDialog = {
     # @return hash
     #
     new: func() {
-        var me = {
+        var obj = {
             parents: [
                 AboutPersistentDialog,
                 PersistentDialog.new(
@@ -25,15 +25,17 @@ var AboutPersistentDialog = {
             ],
         };
 
-        me._parentDialog = me.parents[1];
-        me._parentDialog.setChild(me, AboutPersistentDialog); # Let the parent know who their child is.
-        me._parentDialog.setPositionOnCenter();
+        # Let the parent know who their child is.
+        call(PersistentDialog.setChild, [obj, AboutPersistentDialog], obj.parents[1]);
 
-        me._createLayout();
+        # Enable correct handling of window positioning in the center of the screen.
+        call(PersistentDialog.setPositionOnCenter, [], obj.parents[1]);
 
-        g_VersionChecker.registerCallback(Callback.new(me.newVersionAvailable, me));
+        obj._createLayout();
 
-        return me;
+        g_VersionChecker.registerCallback(Callback.new(obj.newVersionAvailable, obj));
+
+        return obj;
     },
 
     #

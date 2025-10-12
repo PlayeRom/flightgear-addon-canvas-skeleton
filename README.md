@@ -63,7 +63,7 @@ var AboutDialog = {
     # @return hash
     #
     new: func {
-        var me = {
+        var obj = {
             parents: [
                 AboutDialog,
                 TransientDialog.new(        # Inheriting from the TransientDialog class
@@ -76,9 +76,9 @@ var AboutDialog = {
 
         # Crate your stuff here ...
         # Dialog already has a canvas.VBoxLayout prepared for adding more elements to the dialog:
-        # me._vbox.addItem(...);
+        # obj._vbox.addItem(...);
 
-        return me;
+        return obj;
     },
 
     #
@@ -105,7 +105,7 @@ var AboutDialog = {
     # @return hash
     #
     new: func {
-        var me = {
+        var obj = {
             parents: [
                 AboutDialog,
                 PersistentDialog.new(       # Inheriting from the PersistentDialog class
@@ -116,19 +116,17 @@ var AboutDialog = {
             ],
         };
 
-        me._parentDialog = me.parents[1];
-
         # Let the parent know who their child is.
-        me._parentDialog.setChild(me, AboutDialog);
+        call(PersistentDialog.setChild, [obj, AboutDialog], obj.parents[1]);
 
-        # Enable correct handling of window positioning in the center of the screen
-        me._parentDialog.setPositionOnCenter();
+        # Enable correct handling of window positioning in the center of the screen.
+        call(PersistentDialog.setPositionOnCenter, [], obj.parents[1]);
 
         # Crate your stuff here ...
         # Dialog already has a canvas.VBoxLayout prepared for adding more elements to the dialog:
-        # me._vbox.addItem(...);
+        # obj._vbox.addItem(...);
 
-        return me;
+        return obj;
     },
 
     #
