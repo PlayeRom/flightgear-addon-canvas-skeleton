@@ -20,16 +20,16 @@ var TransientDialog = {
     # @return hash
     #
     new: func(width, height, title, resize = false, onResize = nil) {
-        var me = {
+        var obj = {
             parents: [
                 TransientDialog,
                 Dialog.new(width, height, title, resize, onResize),
             ],
         };
 
-        me._handleKeys();
+        obj._handleKeys();
 
-        return me;
+        return obj;
     },
 
     #

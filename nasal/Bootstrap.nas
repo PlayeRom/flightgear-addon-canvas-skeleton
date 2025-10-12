@@ -46,7 +46,7 @@ var Bootstrap = {
     init: func(addon) {
         g_Addon = addon;
 
-        Bootstrap._initDevMode();
+        me._initDevMode();
 
         g_VersionChecker = MetaDataVersionChecker.new();
 

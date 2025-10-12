@@ -14,7 +14,7 @@ var Message = {
     # @return void
     #
     success: func(msgs...) {
-        Message._display(string.join("", msgs), "ok");
+        me._display(string.join("", msgs), "ok");
     },
 
     #
@@ -24,7 +24,7 @@ var Message = {
     # @return void
     #
     error: func(msgs...) {
-        Message._display(string.join("", msgs), "error");
+        me._display(string.join("", msgs), "error");
     },
 
     #

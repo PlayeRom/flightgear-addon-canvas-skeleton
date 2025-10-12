@@ -13,7 +13,7 @@ var AboutTransientDialog = {
     # @return hash
     #
     new: func() {
-        var me = {
+        var obj = {
             parents: [
                 AboutTransientDialog,
                 TransientDialog.new(
@@ -25,9 +25,9 @@ var AboutTransientDialog = {
             ],
         };
 
-        me._createLayout();
+        obj._createLayout();
 
-        return me;
+        return obj;
     },
 
     #

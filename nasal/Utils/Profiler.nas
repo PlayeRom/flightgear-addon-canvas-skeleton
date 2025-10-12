@@ -19,7 +19,7 @@ var Profiler = {
     # @return void
     #
     start: func(message = nil) {
-        Profiler._stack.append({
+        me._stack.append({
             message: message == nil ? "" : "Context: " ~ message,
             startTime: systime(),
         });
@@ -31,14 +31,14 @@ var Profiler = {
     # @return double  Measurement time in seconds.
     #
     stop: func() {
-        var count = Profiler._stack.size();
+        var count = me._stack.size();
 
         if (count == 0) {
             Log.print("profiler time = ? seconds. FIRST RUN start() METHOD.");
             return 0;
         }
 
-        var item = Profiler._stack.pop(count - 1);
+        var item = me._stack.pop(count - 1);
 
         var time = systime() - item.startTime;
 
@@ -53,6 +53,6 @@ var Profiler = {
     # @return void
     #
     clear: func() {
-        Profiler._stack.clear();
+        me._stack.clear();
     },
 };
