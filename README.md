@@ -17,7 +17,7 @@ To solve this, I implemented a mechanism inspired by other frameworks – an `.e
 
 The files in the `nasal/Utils/Dev` folder handle this functionality, so you'll need to keep them if you want to use this mechanism.
 
-You MUST also update the value of `MAIN_MENU_LABEL` in `nasal/Utils/Dev/DevReloadMenu.nas` file to match the name of your main menu label.
+You MUST also update the value of `_MAIN_MENU_LABEL` in `nasal/Utils/Dev/DevReloadMenu.nas` file to match the name of your main menu label.
 
 ## Canvas Dialog
 
