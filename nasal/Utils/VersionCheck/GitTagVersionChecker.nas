@@ -5,10 +5,10 @@
 
 #
 # A class to check if there is a new version of an add-on based on releases and
-# tags when the add-on is hosted on GitLab.
+# git tags when the add-on is hosted on GitHub or GitLab.
 # See description of VersionChecker class.
 #
-var GitLabVersionChecker = {
+var GitTagVersionChecker = {
     #
     # Constructor.
     #
@@ -17,7 +17,7 @@ var GitLabVersionChecker = {
     new: func() {
         var obj = {
             parents: [
-                GitLabVersionChecker,
+                GitTagVersionChecker,
                 JsonVersionChecker.new(),
             ],
         };
@@ -31,12 +31,21 @@ var GitLabVersionChecker = {
     #
     # Get URL to latest release of the project.
     #
-    # @return string
+    # @return string|nil
     #
     _getUrl: func() {
-        var (user, repo) = me.getUserAndRepoNames();
-        var project = Utils.urlEncode(user ~ "/" ~ repo);
-        return "https://gitlab.com/api/v4/projects/" ~ project ~ "/releases/permalink/latest";
+        var (domain, user, repo) = me.getUserAndRepoNames();
+
+        if (domain == "github.com") {
+            return "https://api.github.com/repos/" ~ user ~ "/" ~ repo ~ "/releases/latest";
+        } elsif (domain == "gitlab.com") {
+            var project = Utils.urlEncode(user ~ "/" ~ repo);
+            return "https://gitlab.com/api/v4/projects/" ~ project ~ "/releases/permalink/latest";
+        }
+
+        # TODO: add support for more repos if needed.
+
+        return nil;
     },
 
     #
@@ -51,7 +60,7 @@ var GitLabVersionChecker = {
 
         # GitHub returns a single object with the latest release, where we find the `tag_name` field.
         if (!contains(json, "tag_name")) {
-            Log.print("GitLabVersionChecker failed, the JSON doesn't contain `tag_name` key.");
+            Log.print("GitTagVersionChecker failed, the JSON doesn't contain `tag_name` key.");
             return;
         }
 

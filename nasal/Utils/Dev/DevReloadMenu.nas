@@ -11,8 +11,6 @@ var DevReloadMenu = {
     #
     # Constants:
     #
-    # TODO: change this name to yours, the same as <label> in addon-menubar-items.xml file:
-    _MAIN_MENU_LABEL: "CanvasSkeleton",
     _RELOAD_MENU_LABEL: "Dev Reload",
 
     #
@@ -25,7 +23,38 @@ var DevReloadMenu = {
 
         obj._reloadMenuName = g_Addon.id ~ "-dev-reload";
 
+        obj._mainMenuLabel = obj._getMainMenuLabel();
+
         return obj;
+    },
+
+    #
+    # Get main menu label for this add-on, read from /addon-menubar-items.xml file.
+    #
+    # @return string
+    #
+    _getMainMenuLabel: func() {
+        var menuNode = io.read_properties(g_Addon.basePath ~ "/addon-menubar-items.xml");
+        if (menuNode == nil) {
+            return "none";
+        }
+
+        var menuBarItems = menuNode.getChild("menubar-items");
+        if (menuBarItems == nil) {
+            return "none";
+        }
+
+        var menu = menuBarItems.getChild("menu");
+        if (menu == nil) {
+            return "none";
+        }
+
+        var label = menu.getChild("label");
+        if (label == nil) {
+            return "none";
+        }
+
+        return label.getValue();
     },
 
     #
@@ -91,7 +120,7 @@ var DevReloadMenu = {
     _getMenuNode: func() {
         foreach (var menu; props.globals.getNode("/sim/menubar/default").getChildren("menu")) {
             var name = menu.getChild("label");
-            if (name != nil and name.getValue() == me._MAIN_MENU_LABEL) {
+            if (name != nil and name.getValue() == me._mainMenuLabel) {
                 return menu;
             }
         }

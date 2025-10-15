@@ -48,7 +48,7 @@ var Bootstrap = {
 
         me._initDevMode();
 
-        g_VersionChecker = MetaDataVersionChecker.new();
+        g_VersionChecker = VersionChecker.make();
 
         # Disable the menu as it loads with delay.
         gui.menuEnable("skeleton-about-persistent-dialog", false);
@@ -64,8 +64,8 @@ var Bootstrap = {
 
             # TODO: create persistence canvas dialog here...
 
-            # Check the version last, because dialogs must first register their
-            # callbacks to VersionChecker in their constructors.
+            # Check the version at the end, because dialogs must first register
+            # their callbacks to VersionChecker in their constructors.
             g_VersionChecker.checkLastVersion();
 
             # Enable the menu as the entire Canvas should now be loaded.
@@ -81,11 +81,11 @@ var Bootstrap = {
     uninit: func() {
         Profiler.clear();
 
-        if (g_VersionChecker != nil) {
+        if (g_VersionChecker) {
             g_VersionChecker.del();
         }
 
-        if (g_AboutDialog != nil) {
+        if (g_AboutDialog) {
             g_AboutDialog.del();
         }
 
@@ -98,6 +98,10 @@ var Bootstrap = {
     # @return void
     #
     _initDevMode: func() {
+        if (!Config.dev.useEnvFile) {
+            return;
+        }
+
         var env = DevEnv.new();
 
         var logLevel = env.getValue("MY_LOG_LEVEL");

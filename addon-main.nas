@@ -19,6 +19,7 @@
 #   https://sourceforge.net/p/flightgear/fgdata/ci/next/tree/Docs/README.add-ons
 #
 
+io.include("Config.nas");
 io.include("Loader.nas");
 
 #

@@ -7,17 +7,27 @@ This is a Canvas Skeleton add-on. Use it as a simple starting point for your own
 
 This skeleton favors object-oriented programming (one class per file, with each class having a single responsibility), but you can also write procedural code and put 5K lines in one file – if that's what you're comfortable with :) Methods and class members intended to be private or protected start with an underscore `_`. Nasal doesn't enforce this like C++, but it helps clarify the code's intent.
 
-This add-on includes many files you might find unnecessary. For example, the entire `nasal/Utils` directory contains helper classes you don't have to use. These are mostly wrappers for FlightGear functions that make them easier to work with, but you can safely do without them.
+This add-on includes many files you might find unnecessary. For example, the entire `/nasal/Utils` directory contains helper classes you don't have to use. These are mostly wrappers for FlightGear functions that make them easier to work with, but you can safely do without them.
+
+## Features in brief
+
+1. Automatic recognition and loading of add-on Nasal files into the appropriate namespaces (with an exclusion list if necessary).
+2. Ability to add a menu for restarting add-on Nasal files without having to change repository files.
+3. Ability to define keys for the multi-key command to restart add-on Nasal files without having to change repository files.
+4. A mechanism for checking whether there is a new version of your add-on to inform users about it.
+5. Base classes for Canvas windows that are created and destroyed on demand (Transient dialog), as well as created once during simulator startup (Persistent dialog). And examples of how to use them.
 
 ## Reload add-on and `.env` file
 
-One significant change is not using a hard-coded menu item to reload the add-on. After spending many hours developing add-ons for FlightGear, I realized I needed a solution that wouldn't interfere with the repository and wouldn't require me to constantly remember not to commit the `addon-menubar-items.xml` file with an uncommented reload menu item.
+One significant feature is not using a hard-coded menu item to reload the add-on's Nasal files. After spending many hours developing add-ons for FlightGear, I realized I needed a solution that wouldn't interfere with the repository and wouldn't require me to constantly remember not to commit the `/addon-menubar-items.xml` file with an uncommented reload menu item.
 
-To solve this, I implemented a mechanism inspired by other frameworks – an `.env` file for local configuration that isn't added to the repository (the `.env` file is listed in `.gitignore`). If you create an `.env` file (copy `.env.example` as a starting point), you can set the variable `DEV_MODE=true` and `RELOAD_MENU=true`. This will automatically and programmatically add a **Dev Reload** menu item, allowing you to reload the add-on's Nasal files without restarting the simulator. Or then you can use `:Yacs` multi-key (or set another combination) to restart add-on Nasal files.
+To solve this, I implemented a mechanism inspired by other frameworks – an `.env` file for local configuration that isn't added to the repository (the `.env` file is listed in `.gitignore`). If you create an `.env` file (copy `.env.example` as a starting point), you can set the variable `DEV_MODE=true` and `RELOAD_MENU=true`. This will automatically and programmatically add a **Dev Reload** menu item, allowing you to reload the add-on's Nasal files without restarting the simulator.
 
-The files in the `nasal/Utils/Dev` folder handle this functionality, so you'll need to keep them if you want to use this mechanism.
+You can also use the multi-key command (default `:Yacs`) to restart the Nasal files of the add-on, which is defined in the `.env` file as `RELOAD_MULTIKEY_CMD="Yacs"`. Of course, you should change the keys to your own. I adopted the notation `Y`, as in FlightGear this key means "Development", then I adopted `a` from "addons", and then at least one key from the name of the add-on. By default, we have `cs` from the name "Canvas Skeleton", but you should change it to the name of your add-on.
 
-You MUST also update the value of `_MAIN_MENU_LABEL` in `nasal/Utils/Dev/DevReloadMenu.nas` file to match the name of your main menu label.
+Please note that when entering a multi-key command, suggestions do not work.
+
+If you're not interested in this at all and don't want the add-on to load the Nasal classes associated with the `.env` file, you can disable this mechanism entirely. In the `/Config.nas` file, set the `Config.dev.useEnvFile` field to `false`.
 
 ## Canvas Dialog
 
@@ -169,9 +179,9 @@ var AboutDialog = {
 
 ## Deferring Canvas loading
 
-Creating Canvas windows immediately when the simulator starts (`PersistentDialog`) has another drawback I haven't mentioned yet. Many aircraft developers assume that Canvas indices and textures will never change, and simply hardcode expectations like "the PFD texture is always at index 10." This can cause unintended side effects, such as your dialog boxes appearing on aircraft displays.
+Creating Canvas windows immediately when the simulator starts (`PersistentDialog`) has another drawback I haven't mentioned yet. Many aircraft developers assume that Canvas indices and textures will never change, and simply hardcode expectations like "the PFD texture is always at index 10." This can cause unintended side effects, such as your dialog boxes appearing on aircraft displays!
 
-To avoid this, the add-on defers the creation of its `PersistentDialog` windows by 3 seconds. This allows the aircraft's Canvas windows to be created first, and only then initializes the add-on's windows.
+To avoid this, the add-on defers the creation of its `PersistentDialog` windows by 3 seconds (see timer in `/Bootstrap.nas` file). This allows the aircraft's Canvas windows to be created first, and only then initializes the add-on's windows.
 
 This approach also requires disabling any menu items that open Canvas windows until those windows have been created. Otherwise, clicking such a menu item could try to show a non-existent Canvas window and cause the add-on to crash.
 
@@ -181,27 +191,28 @@ Of course, for simpler cases, you can also solve this differently, for example, 
 
 ## Structure of the add-on
 
-The first and most important Nasal file loaded by FlightGear is `addon-main.nas`. In this skeleton, its sole responsibility is to load the other Nasal files into their appropriate namespaces. By default, files are loaded into the default add-on namespace created by FlightGear for each addon: `__addon[your-addon-id]__`. However, files related to custom Canvas widgets are loaded into the `canvas` namespace.
+The first and most important Nasal file loaded by FlightGear is `/addon-main.nas`. In this skeleton, its sole responsibility is to load the other Nasal files into their appropriate namespaces an bootstrap the add-on. By default, files are loaded into the default add-on namespace created by FlightGear for each addon: `__addon[your-addon-id]__`. However, files related to custom Canvas widgets are loaded into the `canvas` namespace.
 
-If you add new `.nas` files to the project, you don't need to modify anything – `Loader.nas` will automatically detect and load them when the add-on restarts. However, keep in mind:
+If you add new `.nas` files to the project, you don't need to modify anything – `/Loader.nas` will automatically detect and load them when the add-on restarts. However, keep in mind:
 
-- Other Nasal files can be placed in the add-on's root directory or in the `nasal` subdirectory.
-- Any additional subdirectories for Nasal must be located inside `nasal` directory.
+- Other Nasal files can be placed in the add-on's root directory `/` or in the `/nasal` subdirectory.
+- Any additional subdirectories for Nasal must be located inside `/nasal` directory.
 - All Nasal files must use the `.nas` extension, otherwise they won't be recognized.
-- Widget files must be placed in the `Widgets` directory inside somewhere `nasal` directory; all files there are automatically loaded into the `canvas` namespace.
+- Widget files must be placed in the `Widgets` directory inside somewhere `/nasal` directory; all files there are automatically loaded into the `canvas` namespace.
 
 After loading all Nasal files, the `Bootstrap.init()` method is executed.
 
-The `Bootstrap` file should prepare any required directories and initialize your classes. In this skeleton, only the `AboutPersistentDialog` class is created here. You can add more Persistent dialogs the same way. Note that the `AboutPersistentDialog` instance is created inside a timer that delays Canvas window creation by 3 seconds, for the reasons explained earlier.
+The `/nasal/Bootstrap.nas` file should prepare any required directories and initialize your classes. In this skeleton, only the `AboutPersistentDialog` class is created here. You can add more Persistent dialogs the same way. Note that the `AboutPersistentDialog` instance is created inside a timer that delays Canvas window creation by 3 seconds, for the reasons explained earlier.
 
 Directory structure for Nasal files:
 
 - `/` – you can place other Nasal files in the main project directory if you need to, but they cannot be widget files.
 - `/nasal` – place your add-on logic Nasal files here (not related to Canvas).
-- `/nasal/Utils` – supporting Nasal files such as wrappers, facades, etc.
+- `/nasal/Utils` – supporting Nasal files such as wrappers, facades, etc. Something that can be universal for any add-on.
 - `/nasal/Utils/Dev` – Nasal support files, for development purposes only.
-- `/nasal/Canvas` – Nasal files related to drawing in Canvas.
-- `/nasal/Canvas/Widgets` – Nasal widget files for Canvas (models).
+- `/nasal/Utils/VersionCheck` – Nasal files related to the mechanism of detecting whether there is a newer version of the add-on.
+- `/nasal/Canvas` – Nasal files related to drawing in Canvas. This is where you should create new dialog files in Canvas.
+- `/nasal/Canvas/Widgets` – Nasal widget files for Canvas (models). You should create your new widgets here.
 - `/nasal/Canvas/Widgets/Styles` – Nasal widget files for Canvas (views).
 
 ## A little bit about widgets
@@ -215,7 +226,7 @@ The view is hidden behind the model, so your application should not interact wit
 
 ## Namespaces
 
-As you can see in the `addon-main.nas` file, the namespace into which the add-on's additional Nasal files will be loaded is set as `var namespace = addons.getNamespaceName(addon);`. So it will be a namespace in the format `__addon[your-addon-id]__`, where `your-addon-id` is the ID of your add-on specified in the `addon-metadata.xml` file. To access this namespace, you need to refer to it as follows: `globals[‘__addon[your-addon-id]__’]`, which you can see in the `addon-menubar-items.xml` file. This is an inconvenient and long name to use, so if you want, you can create a global alias for it, e.g.:
+As you can see in the `/addon-main.nas` file, the namespace into which the add-on's additional Nasal files will be loaded is set as `var namespace = addons.getNamespaceName(addon);`. So it will be a namespace created by FlightGear, in the format `__addon[your-addon-id]__`, where `your-addon-id` is the ID of your add-on specified in the `/addon-metadata.xml` file. To access this namespace, you need to refer to it as follows: `globals[‘__addon[your-addon-id]__’]`, which you can see in the `/addon-menubar-items.xml` file. This is an inconvenient and long name to use, so if you want, you can create a global alias for it, e.g.:
 
 ```nasal
 var namespace = addons.getNamespaceName(addon);
@@ -224,7 +235,7 @@ var namespace = addons.getNamespaceName(addon);
 globals.canvasSkeletonAddon = globals[namespace];
 ```
 
-Here, of course, change the name `canvasSkeletonAddon` to something that reflects your addon and is unique to the entire FlightGear project. Now, in the `addon-menubar-items.xml` file, you can refer to the addon variables like this: `canvasSkeletonAddon.g_AboutDialog.show();`, which greatly simplifies the code.
+Here, of course, change the name `canvasSkeletonAddon` to something that reflects your addon and is unique to the entire FlightGear project. Now, in the `/addon-menubar-items.xml` file, you can refer to the addon variables like this: `canvasSkeletonAddon.g_AboutDialog.show();`, which greatly simplifies the code.
 
 Another solution would be to load all additional Nasal files into your namespace, e.g., `canvasSkeletonAddon`, by replacing the line:
 
@@ -244,7 +255,7 @@ However, in this case, to access variables or classes loaded from other files, s
 canvasSkeletonAddon.Bootstrap.init(addon);
 ```
 
-In this case, your addon will use two namespaces: `__addon[org.flightgear.addons.CanvasSkeleton]__` and `canvasSkeletonAddon`. The files `addon-main.nas` and `Loader.nas` will be loaded into the first namespace. The rest of the Nasal files that are not Canvas widgets will be loaded into the second namespace.
+In this case, your addon will use two namespaces: `__addon[org.flightgear.addons.CanvasSkeleton]__` and `canvasSkeletonAddon`. The files `/addon-main.nas`,  `/Config.nas` and `/Loader.nas` will be loaded into the first namespace. The rest of the Nasal files (that are not Canvas widgets) will be loaded into the second namespace.
 
 As you can see, there are many solutions you can use. By default, the framework loads Nasal files into `__addon[your-addon-id]__`, which means it does not create additional namespaces, keeping everything in one place.
 
