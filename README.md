@@ -215,6 +215,17 @@ Directory structure for Nasal files:
 - `/nasal/Canvas/Widgets` – Nasal widget files for Canvas (models). You should create your new widgets here.
 - `/nasal/Canvas/Widgets/Styles` – Nasal widget files for Canvas (views).
 
+## Config.nas
+
+The `/Config.nas` file contains a hash of the framework configuration, where you can change some options:
+
+1. `excludedFiles` – a vector with a list of Nasal files that should not be loaded when the add-on starts. If you want to keep a Nasal file in the project but don't want to use it, you can add it to this list. The file must be preceded by a path relative to the add-on's root directory, and the path must begin with `/`, where `/` is the project's root directory. Note that some files have already been added here, such as the main `/addon-main.nas` file, which FlightGear loads itself, and auxiliary files that are included in `/addon-main.nas`, so there's no need to load them again via `Loader`.
+2. `useVersionCheck` – here you can enable one of the methods for checking for a newer version of your add-on. You can also disable (`false`) all the options included here if you don't need this mechanism.
+3. `dev`:
+    * `useEnvFile` – here you can enable/disable the use of the `.env` file and thus load the classes needed to handle this file and the options it contains.
+
+More detailed descriptions can be found in the `/Config.nas` file for each option.
+
 ## A little bit about widgets
 
 A widget is divided into two files: one for the **model** and one for the **view**.
@@ -261,7 +272,7 @@ As you can see, there are many solutions you can use. By default, the framework 
 
 However, Canvas widgets are (and must be) loaded into the `canvas` namespace. This is the namespace used by FlightGear. It's important that your widget names don't conflict with other names used in this namespace, including those loaded from other add-ons. Therefore, if you're migrating a widget from another add-on or FlightGear to your project, rename it in the code to a unique name (both the view and the model).
 
-![alt Namespaces](docs/namespaces.png "Namespaces")
+![alt Default Namespaces](docs/namespaces.png "Default Namespaces")
 
 ## You can also see add-ons written based on this skeleton
 
