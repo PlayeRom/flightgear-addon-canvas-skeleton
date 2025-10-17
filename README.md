@@ -235,6 +235,8 @@ A widget is divided into two files: one for the **model** and one for the **view
 
 The view is hidden behind the model, so your application should not interact with the view directly. In this add-on, the model is implemented in the `ExampleLabel` class, and the view in the `ExampleLabelView` class.
 
+**Note**: The canvas and widget APIs will likely change as Canvas itself is still under development, so you need to keep in mind that you will need to upgrade your widgets in the future.
+
 ## Namespaces
 
 As you can see in the `/addon-main.nas` file, the namespace into which the add-on's additional Nasal files will be loaded is set as `var namespace = addons.getNamespaceName(addon);`. So it will be a namespace created by FlightGear, in the format `__addon[your-addon-id]__`, where `your-addon-id` is the ID of your add-on specified in the `/addon-metadata.xml` file. To access this namespace, you need to refer to it as follows: `globals[‘__addon[your-addon-id]__’]`, which you can see in the `/addon-menubar-items.xml` file. This is an inconvenient and long name to use, so if you want, you can create a global alias for it, e.g.:
