@@ -84,9 +84,8 @@ var AboutTransientDialog = {
 
         me._vbox.addStretch(1);
 
-        var buttonBoxClose = me._drawBottomBar("Close", func { me.hide(); });
         me._vbox.addSpacing(10);
-        me._vbox.addItem(buttonBoxClose);
+        me._vbox.addItem(me._drawBottomBar());
         me._vbox.addSpacing(10);
     },
 
@@ -130,32 +129,27 @@ var AboutTransientDialog = {
     #
     # @param  string  text  Label of button.
     # @param  func  callback  Function which will be executed after click the button.
+    # @param  int  width
     # @return ghost  Button widget.
     #
-    _getButton: func(text, callback) {
+    _getButton: func(text, callback, width = 200) {
         return canvas.gui.widgets.Button.new(me._group)
             .setText(text)
-            .setFixedSize(200, 26)
+            .setFixedSize(width, 26)
             .listen("clicked", callback);
     },
 
     #
-    # @param  string  label  Label of button.
-    # @param  func  callback  function which will be executed after click the button.
     # @return ghost  HBoxLayout object with button.
     #
-    _drawBottomBar: func(label, callback) {
-        var buttonBox = canvas.HBoxLayout.new();
+    _drawBottomBar: func() {
+        var btnClose = me._getButton("Close", func me.hide(), 75);
 
-        var btnClose = canvas.gui.widgets.Button.new(me._group)
-            .setText(label)
-            .setFixedSize(75, 26)
-            .listen("clicked", callback);
+        var hBox = canvas.HBoxLayout.new();
+        hBox.addStretch(1);
+        hBox.addItem(btnClose);
+        hBox.addStretch(1);
 
-        buttonBox.addStretch(1);
-        buttonBox.addItem(btnClose);
-        buttonBox.addStretch(1);
-
-        return buttonBox;
+        return hBox;
     },
 };
