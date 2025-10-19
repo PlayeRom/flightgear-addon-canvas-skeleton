@@ -16,6 +16,7 @@ This add-on includes many files you might find unnecessary. For example, the ent
 3. Ability to define keys for the multi-key command to restart add-on Nasal files without having to change repository files.
 4. A mechanism for checking whether there is a new version of your add-on to inform users about it.
 5. Base classes for Canvas windows that are created and destroyed on demand (Transient dialog), as well as created once during simulator startup (Persistent dialog). And examples of how to use them.
+6. Ability to create and run Nasal unit tests.
 
 ## Reload add-on and `.env` file
 
