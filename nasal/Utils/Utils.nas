@@ -31,7 +31,7 @@ var Utils = {
     #
     tryCatch: func(function, params = nil, obj = nil) {
         var errors = [];
-        params = params or nil;
+        params = params or [];
         call(function, params, obj, errors);
 
         return !size(errors);
