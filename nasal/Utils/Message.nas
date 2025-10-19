@@ -45,7 +45,7 @@ var Message = {
         Log.alert(message);
 
         # Read the message by speech synthesizer
-        props.globals.getNode("/sim/sound/voices/ai-plane").setValue(message);
+        setprop("/sim/sound/voices/ai-plane", message);
 
         # Display message on the screen
         var durationInSec = int(size(message) / 12) + 3;

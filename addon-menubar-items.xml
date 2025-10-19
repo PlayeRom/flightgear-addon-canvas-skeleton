@@ -29,7 +29,7 @@
                 <binding>
                     <command>nasal</command>
                     <script><![CDATA[
-                        globals['__addon[org.flightgear.addons.CanvasSkeleton]__'].Message.success("Hello, I am a sample addon.");
+                        globals['__addon[org.flightgear.addons.CanvasSkeleton]__'].Message.success("Hello, I am a sample add-on.");
                     ]]></script>
                 </binding>
             </item>
