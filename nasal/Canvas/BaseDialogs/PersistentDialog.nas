@@ -17,6 +17,11 @@
 #
 var PersistentDialog = {
     #
+    # Constants:
+    #
+    POS_CENTER_TIMER_INTERVAL: 0.2,
+
+    #
     # Constructor.
     #
     # @param  int  width  Initial width of window.
@@ -112,11 +117,13 @@ var PersistentDialog = {
 
     #
     # Add listeners for screen size changes.
+    # TODO: Consider using globals.MainWindow.addSizeChangedCallback
+    #       when it reaches stable release (currently it's only in dev version).
     #
     # @return void
     #
     _addScreenSizeListeners: func() {
-        me._posCenterTimer = Timer.make(0.1, me, me.setPositionOnCenter);
+        me._posCenterTimer = Timer.make(me.POS_CENTER_TIMER_INTERVAL, me, me.setPositionOnCenter);
 
         me._listeners.add(
             node: me._getPathToCanvas() ~ "/size[0]",
@@ -142,7 +149,7 @@ var PersistentDialog = {
     _handleSizeChange: func() {
         if (me._usePositionOnCenter) {
             me._posCenterTimer.isRunning
-                ? me._posCenterTimer.restart(0.1)
+                ? me._posCenterTimer.restart(me.POS_CENTER_TIMER_INTERVAL)
                 : me._posCenterTimer.start();
         }
     },
