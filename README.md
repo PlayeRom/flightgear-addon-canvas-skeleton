@@ -184,7 +184,7 @@ Creating Canvas windows immediately when the simulator starts (`PersistentDialog
 
 To avoid this, the add-on defers the creation of its `PersistentDialog` windows by 3 seconds (see timer in `/Bootstrap.nas` file). This allows the aircraft's Canvas windows to be created first, and only then initializes the add-on's windows.
 
-This approach also requires disabling any menu items that open Canvas windows until those windows have been created. Otherwise, clicking such a menu item could try to show a non-existent Canvas window and cause the add-on to crash.
+This approach also requires disabling any menu items that open Canvas windows until those windows have been created. Otherwise, clicking such a menu item could try to show a non-existent Canvas window and cause the add-on to crash. Therefore, the menu item that operates on the Persistent dialog should have the `<name>` tag set with some unique name (see the `/addon-menubar-items.xml` file).
 
 If aircraft implementations improve, or if FlightGear introduces a proper solution, this delay will no longer be necessary.
 

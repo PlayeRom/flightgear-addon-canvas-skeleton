@@ -56,16 +56,7 @@ var Bootstrap = {
 
         g_VersionChecker = VersionChecker.make();
 
-        # Disable the menu as it loads with delay.
-        gui.menuEnable("skeleton-about-persistent-dialog", false);
-
-        # Delay loading of the whole addon so as not to break the MCDUs for aircraft like A320, A330. The point is that,
-        # for example, the A320 hard-coded the texture index from /canvas/by-index/texture[15]. But add-on can creates
-        # its canvas textures earlier than the airplane, which will cause that at index 15 there will be no MCDU texture
-        # but the texture from the add-on. So thanks to this delay, the textures of the plane will be created first, and
-        # then the textures of this add-on.
-
-        Timer.singleShot(3, func() {
+        me._delayCanvasLoading(func {
             g_AboutDialog = AboutPersistentDialog.new();
 
             # TODO: create persistence canvas dialog here...
@@ -73,9 +64,6 @@ var Bootstrap = {
             # Check the version at the end, because dialogs must first register
             # their callbacks to VersionChecker in their constructors.
             g_VersionChecker.checkLastVersion();
-
-            # Enable the menu as the entire Canvas should now be loaded.
-            gui.menuEnable("skeleton-about-persistent-dialog", true);
         });
     },
 
@@ -96,6 +84,29 @@ var Bootstrap = {
         }
 
         # TODO: release objects here...
+    },
+
+    #
+    # Delay loading the entire Canvas add-on to avoid damaging aircraft displays such as A320, A330. The point is that,
+    # for example, the A320 hard-coded the texture index from /canvas/by-index/texture[15]. But this add-on may creates
+    # its canvas textures earlier than the airplane, which will cause that at index 15 there will be no texture of some
+    # display but the texture from the add-on. So thanks to this delay, the textures of the plane will be created first,
+    # and then the textures of this add-on.
+    #
+    # @param  func  callback
+    # @return void
+    #
+    _delayCanvasLoading: func(callback) {
+        # Disable menu items responsible for launching persistent dialogs.
+        var menu = MenuStateHandler.new();
+        menu.toggleItems(false);
+
+        Timer.singleShot(3, func() {
+            callback();
+
+            # Enable menu items responsible for launching persistent dialogs.
+            menu.toggleItems(true);
+        });
     },
 
     #
