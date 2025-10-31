@@ -19,8 +19,12 @@
 #   https://sourceforge.net/p/flightgear/fgdata/ci/next/tree/Docs/README.add-ons
 #
 
-io.include("Config.nas");
-io.include("Loader.nas");
+io.include('framework/nasal/App.nas');
+
+#
+# Global object of about dialog.
+#
+var g_AboutDialog = nil;
 
 #
 # Main add-on function.
@@ -29,13 +33,11 @@ io.include("Loader.nas");
 # @return void
 #
 var main = func(addon) {
-    logprint(LOG_ALERT, addon.name, " Add-on initialized from path ", addon.basePath);
+    logprint(LOG_INFO, addon.name, ' Add-on initialized from path ', addon.basePath);
 
-    var namespace = addons.getNamespaceName(addon);
+    Config.useVersionCheck.byMetaData = true;
 
-    Loader.new(addon).load(addon.basePath, namespace);
-
-    Bootstrap.init(addon);
+    App.load(addon);
 };
 
 #
@@ -55,6 +57,67 @@ var main = func(addon) {
 # @return void
 #
 var unload = func(addon) {
-    Log.print("unload");
-    Bootstrap.uninit();
+    App.unload();
+};
+
+
+#
+# This class defines a set of callback functions that the framework will invoke
+# at specific points during the add-on's lifecycle. Add-on authors implement
+# these functions to provide custom behavior, but the framework itself handles
+# when and how they are called.
+#
+# The Hooks object acts purely as a container for these functions. It does not
+# implement any framework logic itself — it is the add-on's responsibility to
+# provide meaningful implementations.
+#
+# All of these methods are optional and can be removed entirely from the code
+# if they are not needed.
+#
+var Hooks = {
+    #
+    # Return vector of Nasal files excluded from loading. Files must be specified with a path relative to the add-on's
+    # root directory and must start with `/` (where `/` represents the add-on's root directory). This can be useful if
+    # you don't use a certain Nasal file, but you also don't want to remove it from your project.
+    #
+    # @return vector
+    #
+    filesExcludedFromLoading: func {
+        return [];
+    },
+
+    #
+    # Create non-Canvas objects here.
+    #
+    onInit: func {
+        # TODO: crate objects here...
+    },
+
+    #
+    # Create Canvas objects here.
+    #
+    onInitCanvas: func {
+        g_AboutDialog = AboutPersistentDialog.new();
+    },
+
+    #
+    # Remove all objects here.
+    #
+    onUninit: func {
+        if (g_AboutDialog != nil) {
+            g_AboutDialog.del();
+        }
+    },
+
+    #
+    # For the menu with 'name', which is disabled while the Canvas is loading,
+    # you can specify here the names of the menu items that should not be enabled
+    # automatically, but you can decide in your code when to enable them again,
+    # using gui.menuEnable().
+    #
+    # @return hash  Key as menu name from addon-menubar-items.xml, value whatever.
+    #
+    excludedMenuNamesForEnabled: func {
+        return {};
+    },
 };
