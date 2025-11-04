@@ -10,6 +10,13 @@
 #
 
 #
+# MY_LOG_LEVEL is using in Log.print() to quickly change all logs visibility used in addon's namespace.
+# This variable can be set in the `.env` file using `MY_LOG_LEVEL`, so you should not modify the code here.
+# Possible values: LOG_ALERT, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_BULK.
+#
+var MY_LOG_LEVEL = LOG_INFO;
+
+#
 # Log class with own log format.
 #
 var Log = {
