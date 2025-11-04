@@ -9,15 +9,7 @@
 # under the GNU Public License v3 (GPLv3)
 #
 
-io.include('Config.nas');
-io.include('Loader.nas');
-io.include('Dev/DevMode.nas');
 io.include('Utils/FGVersion.nas');
-
-#
-# Global object of addons.Addon ghost.
-#
-var g_Addon = nil;
 
 #
 # Global object for check FG version.
@@ -30,6 +22,15 @@ var g_FGVersion = FGVersion.new();
 if (g_FGVersion.lowerThan('2024.1.1')) {
     io.include('Boolean.nas');
 }
+
+io.include('Config.nas');
+io.include('Loader.nas');
+io.include('Dev/DevMode.nas');
+
+#
+# Global object of addons.Addon ghost.
+#
+var g_Addon = nil;
 
 #
 # Main add-on class for load and run all submodules.
