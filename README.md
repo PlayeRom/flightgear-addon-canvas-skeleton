@@ -12,15 +12,15 @@ This is a Framework project containing a set of classes and mechanisms to help c
 5. [Reload add-on and `.env` file](#reload-add-on-and-env-file)
 6. [Canvas Dialog](#canvas-dialog)
     1. [`PersistentDialog` Class](#persistentdialog-class)
-        1. [Center position](#center-position)
     2. [Minimal example of creating a Transient dialog](#minimal-example-of-creating-a-transient-dialog)
     3. [Minimal example of creating a Persistent dialog](#minimal-example-of-creating-a-persistent-dialog)
     4. [Deferring Canvas loading](#deferring-canvas-loading)
 7. [Autoloader of Nasal files](#autoloader-of-nasal-files)
 8. [Namespaces](#namespaces)
 9. [Version checker](#version-checker)
-10. [Global variables](#global-variables)
-11. [Class Diagram](#class-diagram-of-framework)
+10. [Framework Config](#framework-config)
+11. [Global variables](#global-variables)
+12. [Class Diagram](#class-diagram-of-framework)
 
 ## Features in brief
 
@@ -311,26 +311,47 @@ The Framework autoloader will automatically load widget files into the `canvas` 
 
 See [nasal/VersionCheck/README.md](nasal/VersionCheck/README.md).
 
+## Framework Config
+
+The framework includes a `nasal/Config.nas` file that configures some of the framework's functions. If you want to change these options, you should not change them in the `Config.nas` file, but use the appropriate entries in the `/addon-main.nas` file in the `main` function, before calling `Application`:
+
+1. `Config.useVersionCheck.byMetaData = true;` ─ enables the mechanism for checking for a new version of your add-on by checking the version in the `/addon-metadata.xml` file. Only GitHub, GitLab and FGAddons are supported.
+
+2. `Config.useVersionCheck.byGitTag = true;` ─ enables the mechanism for checking for a new version of your add-on by checking the latest tag in the Git repository, where tag is the version number, e.g. "1.2.5" or "v.1.2.5". Only GitHub and GitLab are supported.
+
+3. `Config.dev.useEnvFile = false;` ─ by default, the framework will check for the existence of a `/.env` file in your add-on. If you want to completely disable `.env` file checking and thus exclude the related Nasal files from loading, you can use this option with the value `false`.
+
 ## Global variables
 
 The framework provides the following global variables that you can use in your add-on:
 
-1. `g_Addon` ─ object of `addons.Addon` ghost, here is everything about your addon.
+### `g_Addon`
 
-2. `g_FGVersion` ─ object of `/framework/nasal/Utils/FGVersion` class. With this object you can easily add conditions related to the FlightGear version, e.g.:
-    ```nasal
-    if (g_FGVersion.lowerThan('2024.1.1')) {
-        # ...
-    }
-    ```
+Object of `addons.Addon` ghost, here is everything about your addon.
 
-3. `g_isDevMode` ─ boolean variable. Defaults to false. Set to true when you set the `DEV_MODE=true` variable in the `.env` file. This variable allows you to set conditions to place code only for development, such as logging in large and heavy loops that shouldn't be executed for the end user, but you want to leave it in the code for development purposes.
+### `g_FGVersion`
 
-4. `g_VersionChecker` ─ object of one of method to check the new version of yor add-on: `/framework/nasal/VersionCheck/GitTagVersionChecker.nas` or `/framework/nasal/VersionCheck/MetaDataVersionChecker.nas`. See [Version checker](#version-checker).
+Object of `nasal/Utils/FGVersion` class. With this object you can easily add conditions related to the FlightGear version, e.g.:
 
-5. `MY_LOG_LEVEL` ─ the constant using in `Log.print()` method (which is a wrapper for `logprint`, where first parameter is log level, where the `MY_LOG_LEVEL` can be use here). This constant is ease configurable by `.env` file, so you don't have to modify it in the code.
+```nasal
+if (g_FGVersion.lowerThan('2024.1.1')) {
+    # ...
+}
+```
 
-    By default, it's set to LOG_INFO, so to see the logs from `Log.print()`, you'd have to run the simulator with the `--log-level=info` option. But you don't have to. You can also set `MY_LOG_LEVEL=LOG_ALERT` in the `.env` file, which will cause `Log.print()` to always be logged, without the need to use FlightGear's `--log-level` option.
+### `g_isDevMode`
+
+Boolean variable. Defaults to false. Set to true when you set the `DEV_MODE=true` variable in the `.env` file. This variable allows you to set conditions to place code only for development, such as logging in large and heavy loops that shouldn't be executed for the end user, but you want to leave it in the code for development purposes.
+
+### `g_VersionChecker`
+
+Object of one of method to check the new version of yor add-on: `/framework/nasal/VersionCheck/GitTagVersionChecker.nas` or `/framework/nasal/VersionCheck/MetaDataVersionChecker.nas`. See [Version checker](#version-checker).
+
+### `MY_LOG_LEVEL`
+
+The constant using in `Log.print()` method (which is a wrapper for `logprint`, where first parameter is log level, where the `MY_LOG_LEVEL` can be use here). This constant is ease configurable by `.env` file, so you don't have to modify it in the code.
+
+By default, it's set to LOG_INFO, so to see the logs from `Log.print()`, you'd have to run the simulator with the `--log-level=info` option. But you don't have to. You can also set `MY_LOG_LEVEL=LOG_ALERT` in the `.env` file, which will cause `Log.print()` to always be logged, without the need to use FlightGear's `--log-level` option.
 
 ## Class Diagram of Framework
 

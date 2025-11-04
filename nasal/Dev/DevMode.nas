@@ -9,7 +9,7 @@
 # under the GNU Public License v3 (GPLv3)
 #
 
-io.include('../Utils/Log.nas');
+io.include('Log.nas');
 io.include('DevEnv.nas');
 io.include('DevMultiKeyCmd.nas');
 io.include('DevReloadMenu.nas');

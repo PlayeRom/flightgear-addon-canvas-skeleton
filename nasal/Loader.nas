@@ -54,7 +54,7 @@ var Loader = {
 
             var fullRelPath = relPath ~ '/' ~ entry;
             if (me._excluded.contains(fullRelPath)) {
-                Log.print('Level: ', level, '. namespace: ', namespace, ' excluded -> ', fullRelPath);
+                Log.printYellow('Level: ', level, '. namespace: ', namespace, ' excluded -> ', fullRelPath);
                 continue;
             }
 
@@ -62,7 +62,7 @@ var Loader = {
             me._fullPath.append(entry);
 
             if (me._fullPath.isFile() and me._fullPath.lower_extension == 'nas') {
-                Log.print('Level: ', level, '. namespace: ', namespace, ' -> ', fullRelPath);
+                Log.printGreen('Level: ', level, '. namespace: ', namespace, ' -> ', fullRelPath);
                 io.load_nasal(me._fullPath.realpath, namespace);
                 continue;
             }
@@ -144,8 +144,8 @@ var Loader = {
             subDir ~ '/nasal/Dev/DevMode.nas',
             subDir ~ '/nasal/Dev/DevMultiKeyCmd.nas',
             subDir ~ '/nasal/Dev/DevReloadMenu.nas',
+            subDir ~ '/nasal/Dev/Log.nas',
             subDir ~ '/nasal/Utils/FGVersion.nas',
-            subDir ~ '/nasal/Utils/Log.nas',
         ];
 
         foreach (var file; excludedFiles) {
