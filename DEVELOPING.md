@@ -3,7 +3,7 @@ Development
 
 ## FG Add-on Framework
 
-The `/framework` directory belongs to a separate [FG Add-on Framework](https://github.com/PlayeRom/flightgear-addon-framework) project, which has a separate git repository. The Framework is included in the project as a subtree.
+The `/framework` directory belongs to a separate [FG Add-on Framework](https://github.com/PlayeRom/flightgear-addon-framework) project, which has a separate git repository. The Framework is included in the project as a git subtree.
 
 ### Adding Framework project to `/framework` directory (once only)
 
