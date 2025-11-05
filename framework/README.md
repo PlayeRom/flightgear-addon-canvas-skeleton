@@ -39,7 +39,7 @@ This is a Framework project containing a set of classes and mechanisms to help c
 
 ## How to install
 
-First, you need to create a skeleton of your add-on, for example, based on [Skeleton](https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Addons/Skeleton/). Then, create a `framework` subdirectory in the root directory and copy the framework's contents into it. The simplest file structure should be as follows:
+First, you need to create a skeleton of your add-on, for example, based on [Skeleton](https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Addons/Skeleton/). Then, create a subdirectory, such as `framework`, in the root directory and copy the Framework's contents into it. The simplest file structure should be as follows:
 
 ```text
 your-addon/
@@ -55,25 +55,27 @@ your-addon/
 └── addon-metadata.xml
 ```
 
-It's recommended using Git and its subtree for this purpose, which will allow you to automatically update the framework. Assuming your add-on also uses Git, to do this, run:
+It's recommended using Git and its subtree for this purpose, which will allow you to automatically update the Framework. Assuming your add-on also uses Git, to do this, run:
 
 ```bash
 git subtree add --prefix=framework git@github.com:PlayeRom/flightgear-addon-framework.git main --squash
 ```
 
-This will automatically create a `framework` subdirectory in your directory with all the files.
+This will automatically create a `/framework` subdirectory in your directory with all the files.
 
-Then, to update the framework, for example, from the `main` branch, simply run:
+Then, to update the Framework, for example, from the `main` branch, simply run:
 
 ```bash
 git subtree pull --prefix=framework git@github.com:PlayeRom/flightgear-addon-framework.git main --squash -m "Update framework"
 ```
 
+The directory does not have to be called `framework`, you can use any other name, but it cannot be `nasal` and you can't create more nested directories.
+
 Alternatively, you can also download [Canvas Skeleton](https://github.com/PlayeRom/flightgear-addon-canvas-skeleton), which already includes this Framework and sample canvas dialogs with an example Widget.
 
 ## How to use it
 
-Copy the contents of this framework's `/framework/addon-main.nas` file and paste it into your add-on's `/addon-main.nas` file and make the following modifications:
+Assuming the Framework project is in the `/framework` directory, copy the contents of this framework's `/framework/addon-main.nas` file and paste it into your add-on's `/addon-main.nas` file and make the following modifications:
 
 1. Replace the entry `io.include('nasal/Application.nas');` with `io.include('framework/nasal/Application.nas');`.
 2. In the `.gitignore` file, add a line with the `.env` entry.

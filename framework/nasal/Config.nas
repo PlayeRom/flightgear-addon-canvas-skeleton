@@ -15,12 +15,6 @@
 #
 var Config = {
     #
-    # The name of the directory where the Framework project will be placed, from the point of view of the actual add-on
-    # using the Framework. Defaults to 'framework'.
-    #
-    frameworkDir: 'framework',
-
-    #
     # Options related to checking for a newer version of the add-on. Only one `enabled` flag should be set to `true`,
     # or none at all. For information on how version checking works, see "Version Checker" section in `README.md` file.
     # These settings also ensure that files from the `/nasal/VersionCheck/` directory that are not needed will
