@@ -43,7 +43,7 @@ The image below shows which namespaces individual files and entire directories a
 
 ## You can also see add-ons written based on this skeleton
 
-A great way to get familiar with writing add-ins in Canvas is to explore working add-ins based on this framework:
+A great way to get familiar with writing add-ons in Canvas is to explore working add-ons based on this framework:
 
 1. [Which Runway](https://github.com/PlayeRom/flightgear-addon-which-runway)
 2. [Logbook](https://github.com/PlayeRom/flightgear-addon-logbook)
