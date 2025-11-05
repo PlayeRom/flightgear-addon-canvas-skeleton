@@ -47,7 +47,7 @@ your-addon/
 |   |── nasal/    (Nasal framework files that will be used)
 |   |── addon-main.nas   (framework main file - not used in your add-on, but serves as a template)
 |   |── addon-menubar-items.xml    (this file will not be used)
-|   └── addon-metadata.xml         (this file will not be used)
+|   |── addon-metadata.xml         (this file will not be used)
 |   └── etc...
 |── nasal/    (your additional Nasal files)
 |── addon-main.nas    (main file of your add-on - it's the one being used)
