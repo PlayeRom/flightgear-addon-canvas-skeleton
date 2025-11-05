@@ -70,7 +70,7 @@ var Loader = {
 
             if (level == 0 and !(
                        string.imatch(entry, 'nasal')
-                    or string.imatch(entry, 'framework')
+                    or string.imatch(entry, Config.frameworkDir)
                 )
             ) {
                 # At level 0 we are only interested in the 'nasal' and 'framework/nasal' directories.
@@ -118,8 +118,8 @@ var Loader = {
     _getFrameworkSubDir: func {
         var path = caller(0)[2];
 
-        if (string.imatch(path, g_Addon.basePath ~ '/framework/*')) {
-            return '/framework';
+        if (string.imatch(path, g_Addon.basePath ~ '/' ~ Config.frameworkDir ~ '/*')) {
+            return '/' ~ Config.frameworkDir;
         }
 
         return '';
