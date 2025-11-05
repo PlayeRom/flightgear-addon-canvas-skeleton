@@ -15,12 +15,18 @@
 #
 var Config = {
     #
+    # The name of the directory where the Framework project will be placed, from the point of view of the actual add-on
+    # using the Framework. Defaults to 'framework'.
+    #
+    frameworkDir: 'framework',
+
+    #
     # Options related to checking for a newer version of the add-on. Only one `enabled` flag should be set to `true`,
-    # or none at all. For information on how version checking works, see the file `/nasal/VersionCheck/README.md`.
+    # or none at all. For information on how version checking works, see "Version Checker" section in `README.md` file.
     # These settings also ensure that files from the `/nasal/VersionCheck/` directory that are not needed will
     # not be loaded when the simulator is started.
     # This also requires the URL to be provided in the `<code-repository>` tag in the `/addon-metadata.xml` file, e.g.:
-    # `<code-repository type="string">https://github.com/PlayeRom/flightgear-addon-canvas-framework</code-repository>`.
+    # `<code-repository type="string">https://github.com/PlayeRom/flightgear-addon-framework</code-repository>`.
     #
     # If you host your project on the official FGAddon repository on SourceForge, you provide the URL as e.g.:
     # https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Addons/Framework (where your add-on directory
